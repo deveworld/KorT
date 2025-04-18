@@ -78,7 +78,7 @@ Instructions:
    - Terminology: How appropriate and consistent is the use of specialized terms?
    - Style: How well does the translation maintain the tone and style of the original text?
    - Cultural Adaptation: How well does the translation account for cultural differences?
-3. Calculate the overall quality score by summing up the individual criterion scores (total out of 100).
+3. Decide the overall quality score (up to 100).
 4. Output only the final overall quality score.
 
 Before providing your final score, wrap your evaluation process in <translation_evaluation> tags inside your thinking block. For each criterion:
@@ -87,12 +87,13 @@ Before providing your final score, wrap your evaluation process in <translation_
 - Justify your score for this criterion based on your analysis.
 
 Then, outside of the thinking block, provide the final score in <score> tags.
-
 Your final output should consist only of the score and should not duplicate or rehash any of the work you did in the thinking block.
-
 Example output structure:
-
 <score>
 [Final overall quality score between 0 and 100]
 </score>
+
+Remember, the score distribution is not fixed. Rate the translation as you see fit, being particularly critical of any strange or awkward elements. Even minor issues should result in significant score reductions.
+
+Then, start your evaluation now.
 """

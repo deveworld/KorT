@@ -1,0 +1,121 @@
+import argparse
+import json
+import os
+import time
+
+from ..data import Evaluated, EvaluationMetadata, EvaluationResult, Generated
+from ..evaluators import BatchModelEvaluator
+from ..models import get_batch_model_list, get_model
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Kort Batch Evaluate CLI")
+    parser.add_argument("-t", "--model_type", type=str, help="Model type")
+    parser.add_argument(
+        "-n", "--model_name", type=str, help="Model name (if applicable)"
+    )
+    parser.add_argument("--api_key", type=str, help="API key for the model")
+    parser.add_argument("--input", type=str, help="Input file path")
+    parser.add_argument("--output", type=str, help="Output file path")
+    parser.add_argument(
+        "-l", "--list", action="store_true", help="List available model types"
+    )
+    parser.add_argument(
+        "--job_id", type=str, help="Job ID for retrieving batch results"
+    )
+
+    args = parser.parse_args()
+
+    if args.list:
+        print("Available models:")
+        for model in get_batch_model_list():
+            print(f"- {model}")
+        exit(0)
+    elif args.model_type is None:
+        parser.error("the following arguments are required: --model_type (-t)")
+        exit(0)
+
+    model_type = str(args.model_type)
+    if model_type in get_batch_model_list():
+        print("Using model for evaluator:", model_type)
+        evaluator_class = get_model(model_type)
+        if args.model_name is None:
+            parser.error("the following arguments are required: --model_name (-n)")
+            exit(0)
+    else:
+        print(
+            f"Model type '{model_type}' not found. Use --list to see available model types."
+        )
+        exit(0)
+
+    if evaluator_class._need_api_key:
+        if args.api_key is None:
+            parser.error("the following arguments are required: --api_key")
+            exit(0)
+        evaluator = BatchModelEvaluator(
+            model_type, args.model_name, api_key=args.api_key
+        )
+    else:
+        evaluator = BatchModelEvaluator(model_type, args.model_name)
+
+    org = evaluator_class.model_org
+    name = args.model_name if args.model_name else "N/A"
+    print(f"Using {org} {model_type} - {name}")
+    if args.input is None:
+        parser.error("the following arguments are required: --input")
+        exit(0)
+
+    input_file = args.input
+    output_file = args.output
+    if output_file is None:
+        output_file = (
+            "evaluated/"
+            + os.path.basename(os.path.splitext(input_file)[0])
+            + "_evaluation.json"
+        )
+
+    if os.path.exists(output_file):
+        print(
+            f"Output file '{output_file}' already exists. Please remove it or specify a different output file."
+        )
+        exit(0)
+
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    try:
+        with open(input_file, "r") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"Error loading input file '{input_file}': {e}")
+        exit(0)
+
+    generated_data = Generated(**data)
+    item_count = len(generated_data.generated_examples)
+    print(f"Loaded {item_count} generated data item(s) from `{input_file}`")
+    if item_count < 1:
+        print(f"Input file '{input_file}' is empty or invalid.")
+        exit(0)
+
+    if not args.job_id:
+        batch_id = evaluator.batch_evaluate(generated_data.generated_examples)
+        print(f"Batch job ID: {batch_id}")
+        exit(0)
+
+    evaluated: list[EvaluationResult] = evaluator.get_batch_result(
+        args.job_id, generated_data.generated_examples
+    )
+
+    mean_score = sum([result.score for result in evaluated]) / len(evaluated)
+    print(f"Mean score: {mean_score:.2f}")
+    data = Evaluated(
+        metadata=EvaluationMetadata(
+            model_type=model_type,
+            model_name=name,
+            model_org=org,
+            timestamp=str(time.time() * 1000),
+            mean_score=mean_score,
+        ),
+        evaluation_results=evaluated,
+    )
+    with open(output_file, "w", encoding="utf-8") as f:
+        f.write(data.model_dump_json(indent=2))
+
+    print(f"Evaluation data saved to {output_file}")

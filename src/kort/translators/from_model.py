@@ -1,11 +1,11 @@
 from ..data import PROMPTS, LangCode, PromptTask
-from ..models import get_model
+from ..models import BaseModel, get_model
 from ..translators import BaseTranslator
 
 
 class ModelTranslator(BaseTranslator):
     def __init__(self, model_type: str, model_name: str, api_key: str = None):
-        self.model = get_model(model_type)(model_name, api_key=api_key)
+        self.model: BaseModel = get_model(model_type)(model_name, api_key=api_key)
         if not self.model:
             raise ValueError(f"Model {model_type} not found.")
         self.translator_org = self.model.model_org

@@ -112,9 +112,12 @@ if __name__ == "__main__":
     print(f"Mean score: {mean_score:.2f}")
     data = Evaluated(
         metadata=EvaluationMetadata(
-            model_type=model_type,
-            model_name=name,
-            model_org=org,
+            eval_model_type=model_type,
+            eval_model_name=name,
+            eval_model_org=org,
+            gen_model_type=generated_data.metadata.model_type,
+            gen_model_name=generated_data.metadata.model_name,
+            gen_model_org=generated_data.metadata.model_org,
             timestamp=str(time.time() * 1000),
             mean_score=mean_score,
         ),

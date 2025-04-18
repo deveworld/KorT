@@ -13,9 +13,14 @@ class EvaluationResult(BaseModel):
 
 
 class EvaluationMetadata(BaseModel):
-    model_type: str
-    model_name: str
-    model_org: str
+    eval_model_type: str
+    eval_model_name: str
+    eval_model_org: str
+
+    gen_model_type: str
+    gen_model_name: str
+    gen_model_org: str
+
     timestamp: str
     mean_score: float
 

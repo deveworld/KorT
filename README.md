@@ -25,7 +25,7 @@ pip install .
 ```
 
 ### Generate
-생성 가능한 번역기 리스트 보기
+이용 가능한 번역기 리스트 보기
 ```
 python -m kort.scripts.generate -l
 ```
@@ -44,7 +44,7 @@ python -m kort.scripts.generate \
 python -m kort.scripts.evaluate -l
 ```
 
-Generate 된 파일을 input으로 평가
+Generate 된 파일을 input으로 받아 평가
 ```
 python -m kort.scripts.evaluate \
     -t gemini \
@@ -53,7 +53,7 @@ python -m kort.scripts.evaluate \
     --input generated/openai_gpt-4.1-mini.json
 ```
 
-또는 Batch를 사용하여 평가할 경우: Batch 생성은 동일함함
+또는 Batch를 사용하여 평가할 경우: 먼저 Batch 등록한 후
 ```
 python -m kort.scripts.eval_batch \
     -t claudebatch \
@@ -61,7 +61,7 @@ python -m kort.scripts.eval_batch \
     --api_key sk-ant-api03-xxx \
     --input generated/openai_gpt-4.1-mini.json
 ```
-Batch가 끝난 후에 Job ID를 입력하여 평가 완료하기
+Batch가 끝난 뒤에 Job ID를 입력하여 평가 완료
 ```
 python -m kort.scripts.eval_batch \
     -t claudebatch \
@@ -69,4 +69,10 @@ python -m kort.scripts.eval_batch \
     --api_key sk-ant-api03-xxx \
     --input generated/openai_gpt-4.1-mini.json \
     --job_id msgbatch_xxx
+```
+
+### LeaderBoard
+아래 명령으로 리더보드 실행
+```
+python -m kort.scripts.leaderboard
 ```

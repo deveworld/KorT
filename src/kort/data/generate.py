@@ -54,24 +54,12 @@ EVAL_DATA[LangCode.ENG] = {
             translation={LangCode.KOR: "너 완전 헛다리 짚고 있는 거야."},
         ),
         Example(
-            source="It's raining cats and dogs.",
-            translation={LangCode.KOR: "비가 억수같이 내린다."},
-        ),
-        Example(
-            source="Don't put all your eggs in one basket.",
-            translation={LangCode.KOR: "한 우물만 파지 마라."},
-        ),
-        Example(
             source="Yeah, when pigs fly. You know.",
             translation={LangCode.KOR: "아니, 절대로. 너도 알잖아."},
         ),
         Example(
-            source="Break a leg for your presentation tonight!",
-            translation={LangCode.KOR: "오늘밤에 발표 잘 해!"},
-        ),
-        Example(
             source="What a pencil fest! Typical engineering school.",
-            translation={LangCode.KOR: "완전 고추밭이네! 전형적인 공대야."},
+            translation={LangCode.KOR: "완전 고추밭이네! 전형적인 공대야. (pencil fest를 제대로 번역하지 못하면 점수를 매우 낮게 줄 것)."},
         ),
     ],
     Categories.WORDPLAY_PUN: [
@@ -82,37 +70,11 @@ EVAL_DATA[LangCode.ENG] = {
             },
         ),
         Example(
-            source="I'm reading a book about anti-gravity. It's impossible to put down!",
-            translation={
-                LangCode.KOR: "무중력에 관한 책을 읽고 있는데, 못 내려놓고 끝까지 읽게 돼!"
-            },
-        ),
-        Example(
             source="A boiled egg every morning is hard to beat.",
             translation={LangCode.KOR: "매일 아침 삶은 계란만한 게 없다."},
         ),
-        Example(
-            source="I used to be a baker, but I couldn't make enough dough.",
-            translation={LangCode.KOR: "예전에 제빵사였는데, 벌이가 영 시원찮았어요."},
-        ),
-        Example(
-            source="Need an ark? I Noah guy.",
-            translation={
-                LangCode.KOR: "방주 필요해? 나 아는 노아라고 있어.",
-            },
-        ),
-        Example(
-            source="Atheism is a non-prophet organization.",
-            translation={
-                LangCode.KOR: "무신론은 선지자가 없는 조직이다. / 무신론은 비영리 단체다."
-            },
-        ),
     ],
     Categories.CULTURE: [
-        Example(
-            source="He's a real Scrooge.",
-            translation={LangCode.KOR: "그는 정말 구두쇠야."},
-        ),
         Example(
             source="It's his fifteen minutes of fame.",
             translation={LangCode.KOR: "잠깐 유명세를 타는 중이다."},
@@ -141,7 +103,7 @@ EVAL_DATA[LangCode.ENG] = {
         ),
         Example(
             source="I want to say 'OK Boomer' to my boss.",
-            translation={LangCode.KOR: "사장님한테 '네 다음 틀딱'이라고 하고 싶어."},
+            translation={LangCode.KOR: "사장님한테 '네 다음 틀딱'이라고 하고 싶어. (OK Boomer를 제대로 번역하지 못한 경우 점수를 매우 낮게 줄 것)"},
         ),
         Example(
             source="I got some tea to spil, anybody wanna listen?",
@@ -198,27 +160,27 @@ EVAL_DATA[LangCode.KOR] = {
             translation={LangCode.ENG: "I wolfed down a bowl of rice."},
         ),
         Example(
-            source="끌 모아 태산이라는 말이 있듯이, 나도 매일 돈을 모으고 있어.",
+            source="이야, 오랜만이다. 밥은 먹고 다니냐?",
             translation={
-                LangCode.ENG: "Just like the saying 'Little drops of water make a mighty ocean,' I am also saving money every day."
+                LangCode.ENG: "Wow, long time no see! How have you been?"
+            },
+        ),
+        Example(
+            source="아직 정해진 것도 아닌데, 너무 김칫국부터 마시는 거 아니야?",
+            translation={
+                LangCode.ENG: "Nothing's been decided yet, aren't you getting ahead of yourself?"
+            },
+        ),
+        Example(
+            source="사람이 빽이 있어야지. 어디 낙하산 꽂아 줄 사람 없나...",
+            translation={
+                LangCode.ENG: "A person's gotta have connections. Isn't there anyone who can pull some strings and place me in a position..."
             },
         ),
         Example(
             source="소 잃고 외양간 고치지 말고, 지금부터 보안 작업을 꼼꼼히 해두자.",
             translation={
                 LangCode.ENG: "Let's not wait to lock the stable door after the horse has bolted. We should meticulously implement our security measures starting now."
-            },
-        ),
-        Example(
-            source="빈대 잡으려다 초가삼간 다 태운 격이지 뭐..",
-            translation={
-                LangCode.ENG: "It's like using a sledgehammer to crack a nut.."
-            },
-        ),
-        Example(
-            source="요즘 일 구하기가 하늘에 별 따기야.",
-            translation={
-                LangCode.ENG: "Getting a job nowadays feels like mission impossible."
             },
         ),
         Example(
@@ -230,9 +192,9 @@ EVAL_DATA[LangCode.KOR] = {
     ],
     Categories.WORDPLAY_PUN: [
         Example(
-            source="이 다음에 이 닦고 자자.",
+            source="저 대학원생이 머리는 휑 하지만 머리는 좋아서 교수도 될 거 같아.",
             translation={
-                LangCode.ENG: "Let's brush our teeth after this, then go to bed."
+                LangCode.ENG: "His head's getting bare up there, but his head's got smarts to spare; he could be a professor, I swear. (머리라는 단어의 언어유희를 제대로 살리지 못한 경우 점수를 매우 낮게 줄 것)"
             },
         ),
         Example(
@@ -248,19 +210,21 @@ EVAL_DATA[LangCode.KOR] = {
             },
         ),
         Example(
-            source="마그마는 내가 막으마. 어서 도망가거라.",
-            translation={LangCode.ENG: "Magma? Ma' gonna stop it. Hurry and run."},
-        ),
-        Example(
-            source="수박을 먹을 수밖에.",
+            source="난 눈이 높아서 그런지, 눈 맞는 일이 없더라.",
             translation={
-                LangCode.ENG: "Well, I guess I have no choice but to eat the watermelon."
+                LangCode.ENG: "Maybe it's because my standards are high, but I rarely meet someone I click with."
             },
         ),
         Example(
-            source="세상에서 제일 적은 금은 바로, '조금'입니다.",
+            source="훈훈한 훈남 훈녀네.",
             translation={
-                LangCode.ENG: "The smallest amount of gold in the world is, 'a little bit'."
+                LangCode.ENG: "What a lovely guy and lovely girl."
+            },
+        ),
+        Example(
+            source="은근히 은근한 매력이 있네.",
+            translation={
+                LangCode.ENG: "It has a subtle, subtle charm."
             },
         ),
     ],
@@ -284,10 +248,6 @@ EVAL_DATA[LangCode.KOR] = {
             },
         ),
         Example(
-            source="오늘 회식 있습니다.",
-            translation={LangCode.ENG: "There's a company dinner today."},
-        ),
-        Example(
             source="빨간 날이라서 회사 안가도 된다!",
             translation={
                 LangCode.ENG: "Since it's a public holiday today, no work for me!"
@@ -299,6 +259,12 @@ EVAL_DATA[LangCode.KOR] = {
                 LangCode.ENG: "Maybe it's because today is the Suneung (CSAT), but the roads are really clear."
             },
         ),
+        Example(
+            source="빨리빨리 좀 해. 이러다 해 지겠다.",
+            translation={
+                LangCode.ENG: "Hurry up, chop chop! At this rate, the sun will set."
+            },
+        ),
     ],
     Categories.SLANG: [
         Example(
@@ -308,25 +274,13 @@ EVAL_DATA[LangCode.KOR] = {
             },
         ),
         Example(
-            source="그 사람 완전 꿀벅지야. 미쳤어!",
-            translation={
-                LangCode.ENG: "Damn, that person has killer thighs! It's insane!"
-            },
-        ),
-        Example(
-            source="자, 그럼 스킵하고 다음으로 넘어갑시다.",
-            translation={
-                LangCode.ENG: "Okay then, let's skip this and move on to the next thing."
-            },
-        ),
-        Example(
             source="좀 똘끼 있는 애가 노잼 드립쳐서 갑분싸된 상황이야.",
             translation={
                 LangCode.ENG: "So, this kinda eccentric person told a really lame joke, and it just completely killed the mood."
             },
         ),
         Example(
-            source="아 진짜 더럽게 귀찮은데... 좀 닥쳐 볼래?",
+            source="아 진짜 더럽게 귀찮게 하네... 좀 닥쳐 볼래?",
             translation={
                 LangCode.ENG: "Seriously, you're pissing me off... Just shut your mouth?"
             },
@@ -350,21 +304,13 @@ EVAL_DATA[LangCode.KOR] = {
             translation={LangCode.ENG: "Spring seemed to settle upon their smile."},
         ),
         Example(
-            source="그는 충무공의 기개를 본받아 어려운 상황에서도 결코 물러서지 않았다.",
-            translation={
-                LangCode.ENG: "Inspired by the unwavering courage of the great admiral (Chungmugong), he refused to yield even when facing adversity.",
-            },
+            source="아이고, 누렇다 못해 누리끼리 해졌네.",
+            translation={LangCode.ENG: "Oh dear, it's not just yellow, it's turned all dingy."},
         ),
         Example(
             source="그 시인의 글에는 청산유수와 같은 맑고 흐르는 아름다움이 담겨 있었다.",
             translation={
                 LangCode.ENG: "There was a lucid and flowing beauty in the poet's work, like effortlessly running water (Cheongsanyusu).",
-            },
-        ),
-        Example(
-            source="현대 사회에서도 심청이처럼 효를 실천하는 사람들의 이야기가 종종 뉴스에 나온다.",
-            translation={
-                LangCode.ENG: "Even today, news outlets sometimes feature stories of people showing extraordinary devotion to their parents, reminiscent of the legendary Sim Cheong.",
             },
         ),
         Example(

@@ -1,6 +1,6 @@
 import re
 
-from ..data import PROMPTS, EvaluationResult, GeneratedExample, PromptTask
+from ..data import PROMPTS, EvaluationResult, GenerationExample, PromptTask
 from ..evaluators import BaseEvaluator
 from ..models import BaseModel, get_model
 
@@ -16,12 +16,12 @@ class ModelEvaluator(BaseEvaluator):
         self.evaluator_name = self.model.model_name
         super().__init__(self.evaluator_name)
 
-    def evaluate(self, generated: GeneratedExample) -> EvaluationResult:
+    def evaluate(self, generated: GenerationExample) -> EvaluationResult:
         """
         Evaluate the generated example.
 
         Args:
-            generated (GeneratedExample): The generated example to evaluate.
+            generated (GenerationExample): The generated example to evaluate.
 
         Returns:
             EvaluationResult: The evaluation result.

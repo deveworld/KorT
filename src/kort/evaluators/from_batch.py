@@ -1,7 +1,7 @@
 import re
 import warnings
 
-from ..data import PROMPTS, BatchStatus, EvaluationResult, GeneratedExample, PromptTask
+from ..data import PROMPTS, BatchStatus, EvaluationResult, GenerationExample, PromptTask
 from ..evaluators import BaseEvaluator
 from ..models import BatchModel, get_model
 
@@ -17,12 +17,12 @@ class BatchModelEvaluator(BaseEvaluator):
         self.evaluator_name = self.model.model_name
         super().__init__(self.evaluator_name)
 
-    def batch_evaluate(self, generated_examples: list[GeneratedExample]) -> str:
+    def batch_evaluate(self, generated_examples: list[GenerationExample]) -> str:
         """
                 Evaluate the generated examples in batch.
 
                 Args:
-                    generated_examples (list[GeneratedExample]): The list of generated examples to evaluate.
+                    generated_examples (list[GenerationExample]): The list of generated examples to evaluate.
         S
                 Returns:
                     str: The evaluation result.
@@ -38,7 +38,7 @@ class BatchModelEvaluator(BaseEvaluator):
         return id
 
     def get_batch_result(
-        self, job_id: str, generated_examples: list[GeneratedExample]
+        self, job_id: str, generated_examples: list[GenerationExample]
     ) -> list[EvaluationResult]:
         """
         Get the batch evaluation result.
@@ -75,12 +75,12 @@ class BatchModelEvaluator(BaseEvaluator):
 
         return evaluation_results
 
-    def evaluate_prompt(self, generated: GeneratedExample) -> str:
+    def evaluate_prompt(self, generated: GenerationExample) -> str:
         """
         Generate the evaluation prompt for the given generated example.
 
         Args:
-            generated (GeneratedExample): The generated example to evaluate.
+            generated (GenerationExample): The generated example to evaluate.
 
         Returns:
             str: The evaluation prompt.
@@ -96,14 +96,14 @@ class BatchModelEvaluator(BaseEvaluator):
         return prompt
 
     def parse_result(
-        self, result: str, generated: GeneratedExample
+        self, result: str, generated: GenerationExample
     ) -> EvaluationResult:
         """
         Parse the evaluation result string to extract the score.
 
         Args:
             result (str): The evaluation result string.
-            generated (GeneratedExample): The generated example to evaluate.
+            generated (GenerationExample): The generated example to evaluate.
 
         Returns:
             EvaluationResult: The evaluation result.

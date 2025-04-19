@@ -97,3 +97,8 @@ Remember, the score distribution is not fixed. Rate the translation as you see f
 
 Then, start your evaluation now.
 """
+
+CUSTOM_PROMPTS = {
+    "gugugo": "### {source_lang_korean}: {text}</끝>\n### {target_lang_korean}: ",
+    "gemago": "{source_lang_english}:\n{text}\n\n{target_lang_english}:\n",
+}

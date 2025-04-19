@@ -1,4 +1,4 @@
-from ..data import EvaluationResult, GeneratedExample
+from ..data import EvaluationResult, GenerationExample
 
 
 class BaseEvaluator:
@@ -29,12 +29,12 @@ class BaseEvaluator:
         if api_key is not None:
             self.api_key = api_key
 
-    def evaluate(self, generated: GeneratedExample) -> EvaluationResult:
+    def evaluate(self, generated: GenerationExample) -> EvaluationResult:
         """
         Evaluate the generated example.
 
         Args:
-            generated (GeneratedExample): The generated example to evaluate.
+            generated (GenerationExample): The generated example to evaluate.
 
         Returns:
             EvaluationResult: The evaluation result.

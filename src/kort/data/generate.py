@@ -26,7 +26,7 @@ class Example(BaseModel):
     translation: dict[LangCode, str]
 
 
-class GeneratedExample(BaseModel):
+class GenerationExample(BaseModel):
     source: str
     translated: str
     source_lang: LangCode
@@ -41,7 +41,7 @@ class GeneratedExample(BaseModel):
 
 class Generated(BaseModel):
     metadata: GenerationMetadata
-    generated_examples: list[GeneratedExample]
+    generated_examples: list[GenerationExample]
 
 
 # TODO: Hardcoded-dict is workaround for now. Will be replaced with other format as like jsonl.
@@ -59,7 +59,9 @@ EVAL_DATA[LangCode.ENG] = {
         ),
         Example(
             source="What a pencil fest! Typical engineering school.",
-            translation={LangCode.KOR: "완전 고추밭이네! 전형적인 공대야. (pencil fest를 제대로 번역하지 못하면 점수를 매우 낮게 줄 것)."},
+            translation={
+                LangCode.KOR: "완전 고추밭이네! 전형적인 공대야. (pencil fest를 제대로 번역하지 못하면 점수를 매우 낮게 줄 것)."
+            },
         ),
     ],
     Categories.WORDPLAY_PUN: [
@@ -103,7 +105,9 @@ EVAL_DATA[LangCode.ENG] = {
         ),
         Example(
             source="I want to say 'OK Boomer' to my boss.",
-            translation={LangCode.KOR: "사장님한테 '네 다음 틀딱'이라고 하고 싶어. (OK Boomer를 제대로 번역하지 못한 경우 점수를 매우 낮게 줄 것)"},
+            translation={
+                LangCode.KOR: "사장님한테 '네 다음 틀딱'이라고 하고 싶어. (OK Boomer를 제대로 번역하지 못한 경우 점수를 매우 낮게 줄 것)"
+            },
         ),
         Example(
             source="I got some tea to spil, anybody wanna listen?",
@@ -161,9 +165,7 @@ EVAL_DATA[LangCode.KOR] = {
         ),
         Example(
             source="이야, 오랜만이다. 밥은 먹고 다니냐?",
-            translation={
-                LangCode.ENG: "Wow, long time no see! How have you been?"
-            },
+            translation={LangCode.ENG: "Wow, long time no see! How have you been?"},
         ),
         Example(
             source="아직 정해진 것도 아닌데, 너무 김칫국부터 마시는 거 아니야?",
@@ -217,15 +219,11 @@ EVAL_DATA[LangCode.KOR] = {
         ),
         Example(
             source="훈훈한 훈남 훈녀네.",
-            translation={
-                LangCode.ENG: "What a lovely guy and lovely girl."
-            },
+            translation={LangCode.ENG: "What a lovely guy and lovely girl."},
         ),
         Example(
             source="은근히 은근한 매력이 있네.",
-            translation={
-                LangCode.ENG: "It has a subtle, subtle charm."
-            },
+            translation={LangCode.ENG: "It has a subtle, subtle charm."},
         ),
     ],
     Categories.CULTURE: [
@@ -305,7 +303,9 @@ EVAL_DATA[LangCode.KOR] = {
         ),
         Example(
             source="아이고, 누렇다 못해 누리끼리 해졌네.",
-            translation={LangCode.ENG: "Oh dear, it's not just yellow, it's turned all dingy."},
+            translation={
+                LangCode.ENG: "Oh dear, it's not just yellow, it's turned all dingy."
+            },
         ),
         Example(
             source="그 시인의 글에는 청산유수와 같은 맑고 흐르는 아름다움이 담겨 있었다.",

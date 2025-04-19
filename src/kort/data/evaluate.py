@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from .generate import GeneratedExample
+from .generate import GenerationExample
 
 
 class EvaluationResult(BaseModel):
@@ -8,7 +8,7 @@ class EvaluationResult(BaseModel):
     Evaluation result for a single example.
     """
 
-    generated: GeneratedExample
+    generated: GenerationExample
     score: int
 
 

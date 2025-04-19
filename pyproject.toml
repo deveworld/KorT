@@ -1,6 +1,6 @@
 [project]
 name = "KorT"
-version = "0.3.0"
+version = "0.4.0"
 description = "한국어 번역 능력 벤치마크, LLM-as-a-judge"
 readme = "README.md"
 authors = [

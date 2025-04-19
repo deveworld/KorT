@@ -11,7 +11,14 @@ class BaseModel:
     error = 0
     last_error = time.time()
 
-    def __init__(self, model_name: str, api_key: str = None, evaluation: bool = False):
+    def __init__(
+        self,
+        model_name: str,
+        api_key: str = None,
+        evaluation: bool = False,
+        device: str = None,
+        stop: str = None,
+    ):
         """
         Initialize the base model with the specified model name and API key.
 
@@ -31,6 +38,8 @@ class BaseModel:
             self.api_key = api_key
 
         self.evaluation = evaluation
+        self.device = device
+        self.stop = stop
 
     def inference(self, input: str) -> str:
         """

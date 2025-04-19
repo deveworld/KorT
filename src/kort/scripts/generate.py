@@ -4,7 +4,7 @@ import time
 
 import tqdm
 
-from ..data import EVAL_DATA, Generated, GeneratedExample, GenerationMetadata, LangCode
+from ..data import EVAL_DATA, Generated, GenerationExample, GenerationMetadata, LangCode
 from ..models import get_model, get_model_list
 from ..translators import ModelTranslator, get_translator, get_translator_list
 
@@ -16,6 +16,11 @@ if __name__ == "__main__":
     )
     parser.add_argument("--api_key", type=str, help="API key for the model")
     parser.add_argument("--output", type=str, help="Output file path")
+    parser.add_argument(
+        "-p", "--prompt_type", type=str, help="Prompt type for the model"
+    )
+    parser.add_argument("-d", "--device", type=str, help="Device to use for the model")
+    parser.add_argument("-s", "--stop", type=str, help="Stop sequence for the model")
     parser.add_argument(
         "-l", "--list", action="store_true", help="List available model types"
     )
@@ -49,6 +54,9 @@ if __name__ == "__main__":
         )
         exit(0)
 
+    prompt = args.prompt_type
+    device = args.device
+    stop = args.stop
     if translator_class._need_api_key:
         if args.api_key is None:
             parser.error("the following arguments are required: --api_key")
@@ -57,20 +65,32 @@ if __name__ == "__main__":
             translator = translator_class(api_key=args.api_key)
         else:
             translator = ModelTranslator(
-                model_type, args.model_name, api_key=args.api_key
+                model_type,
+                args.model_name,
+                api_key=args.api_key,
+                base_prompt=prompt,
+                device=device,
+                stop=stop,
             )
     else:
         if is_native:
             translator = translator_class()
         else:
-            translator = ModelTranslator(model_type, args.model_name)
+            translator = ModelTranslator(
+                model_type,
+                args.model_name,
+                base_prompt=prompt,
+                device=device,
+                stop=stop,
+            )
 
-    org = translator_class.translator_org if is_native else translator_class.model_org
-    name = args.model_name if args.model_name else translator_class.translator_name
+    org = translator.translator_org if is_native else translator.model.model_org
+    name = translator.translator_name if is_native else translator.model.model_name
     output = args.output
     if output is None:
         output = f"generated/{org.lower()}_{name.lower()}.json"
 
+    print("Output file:", output)
     if os.path.exists(output):
         print(f"Output file {output} already exists. Please choose a different name.")
         exit(0)
@@ -97,7 +117,7 @@ if __name__ == "__main__":
                     text, source_lang, invert_ko_en(source_lang)
                 )
                 generated.append(
-                    GeneratedExample(
+                    GenerationExample(
                         source=text,
                         translated=translated_text,
                         source_lang=source_lang,

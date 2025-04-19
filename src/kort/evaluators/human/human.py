@@ -1,4 +1,4 @@
-from ...data import EvaluationResult, GeneratedExample
+from ...data import EvaluationResult, GenerationExample
 from ...evaluators import BaseEvaluator
 
 
@@ -9,12 +9,12 @@ class HumanEvaluator(BaseEvaluator):
     def __init__(self):
         super().__init__(self.evaluator_name)
 
-    def evaluate(self, generated: GeneratedExample) -> EvaluationResult:
+    def evaluate(self, generated: GenerationExample) -> EvaluationResult:
         """
         Evaluate the generated example.
 
         Args:
-            generated (GeneratedExample): The generated example to evaluate.
+            generated (GenerationExample): The generated example to evaluate.
 
         Returns:
             EvaluationResult: The evaluation result.

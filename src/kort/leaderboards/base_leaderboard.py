@@ -23,12 +23,13 @@ class BaseLeaderBoard:
 
     data: list[ModelSummary] = []
     leaderboard_data = []
+    raw_data: list[dict] = []
 
-    def __init__(self, input_dir: str):
+    def __init__(self, input_dir: str) -> None:
         self.input_dir = input_dir
         self.load_data()
 
-    def get_summary(self, evaluated: Evaluated):
+    def get_summary(self, evaluated: Evaluated) -> ModelSummary:
         """
         Get a summary of the evaluated model.
         """
@@ -53,6 +54,16 @@ class BaseLeaderBoard:
             category_scores=sum_category_scores,
         )
 
+    def flatten_data(self, evaluated: Evaluated):
+        return {
+            "model_name": f"{evaluated.metadata.gen_model_org}/{evaluated.metadata.gen_model_name}",
+            "eval_model_name": f"{evaluated.metadata.eval_model_org}/{evaluated.metadata.eval_model_name}",
+            **{
+                f"{result.generated.category.name}_{i}": result.generated.translated
+                for i, result in enumerate(evaluated.evaluation_results)
+            }
+        }
+
     def load_data(self):
         json_files = [f for f in os.listdir(self.input_dir) if f.endswith(".json")]
 
@@ -63,7 +74,9 @@ class BaseLeaderBoard:
             try:
                 evaluated = Evaluated(**data)
                 self.data.append(self.get_summary(evaluated))
-            except Exception:
+                self.raw_data.append(self.flatten_data(evaluated))
+            except Exception as e:
+                print(f"Error loading file {file}: {e}")
                 continue
 
         common_categories = self.data[0].category_scores.keys()
@@ -71,13 +84,20 @@ class BaseLeaderBoard:
             self.leaderboard_data.append(
                 {
                     "Model Name": model.model_name,
-                    "Overall Score": round(model.overall_score),
+                    "Overall Score": model.overall_score,
                     **{
-                        category.name: round(model.category_scores[category])
+                        category.name: model.category_scores[category]
                         for category in common_categories
                     },
                 }
             )
+
+        self.leaderboard_data.sort(key=lambda x: x["Overall Score"], reverse=True)
+        # round scroes
+        for model in self.leaderboard_data:
+            model["Overall Score"] = round(model["Overall Score"], 1)
+            for category in common_categories:
+                model[category.name] = round(model[category.name], 1)
 
     def launch(self):
         """

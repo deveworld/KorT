@@ -84,6 +84,8 @@ if TYPE_CHECKING:
     from .deepl import DeepLAPITranslator, DeepLFreeTranslator
     from .from_model import ModelTranslator
     from .naver import PapagoFreeTranslator
+    from .google import GoogleFreeTranslator
+    from .kakao import KakaoFreeTranslator
 
     __all__ = [
         "BaseTranslator",
@@ -91,6 +93,8 @@ if TYPE_CHECKING:
         "DeepLAPITranslator",
         "DeepLFreeTranslator",
         "PapagoFreeTranslator",
+        "GoogleFreeTranslator",
+        "KakaoFreeTranslator",
     ]
 else:
     _file = globals()["__file__"]
@@ -100,6 +104,8 @@ else:
         ".deepl.DeepLAPITranslator",
         ".deepl.DeepLFreeTranslator",
         ".naver.PapagoFreeTranslator",
+        ".google.GoogleFreeTranslator",
+        ".kakao.KakaoFreeTranslator",
     ]
 
     # Create lazy module with our modified functions

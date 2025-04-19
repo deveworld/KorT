@@ -28,7 +28,7 @@ class LeaderboardWeb(BaseLeaderBoard):
     def leaderboard(self):
         with gradio.Blocks() as leaderboard:
             gradio.Markdown("# KorT Leaderboard")
-            gradio.Markdown("## Leaderboard")
+            gradio.Markdown("## Leaderboard ㅡ [KorT](https://github.com/deveworld/KorT)")
 
             pd_data = pandas.DataFrame(self.leaderboard_data)
             gradio.Dataframe(pd_data)
@@ -39,7 +39,7 @@ class LeaderboardWeb(BaseLeaderBoard):
         with gradio.Blocks() as raw_data:
             gradio.Markdown("# KorT Leaderboard")
             gradio.Markdown("## Raw Data")
-            gradio.Markdown("### [현재 데이터](https://github.com/deveworld/KorT/blob/main/src/kort/data/generate.py#L48)")
+            gradio.Markdown("### [평가 데이터 다운로드](https://kort.worldsw.dev/evaluated.zip)")
 
             pd_data = pandas.DataFrame(self.raw_data)
             gradio.Dataframe(pd_data)
@@ -65,6 +65,7 @@ class LeaderboardWeb(BaseLeaderBoard):
             gradio.Markdown("# KorT Leaderboard")
             gradio.Markdown("## Sentences")
             gradio.Markdown("### [문장 출처](https://github.com/deveworld/KorT/blob/main/eval_data.md)")
+            gradio.Markdown("### [최신 데이터셋](https://github.com/deveworld/KorT/blob/main/src/kort/data/generate.py#L48)")
 
             pd_data = pandas.DataFrame(data)
             gradio.Dataframe(pd_data)

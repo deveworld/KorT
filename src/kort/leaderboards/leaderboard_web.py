@@ -164,25 +164,63 @@ class LeaderboardWeb(BaseLeaderBoard):
 
     def launch(self):
         """Launches the Gradio web interface."""
+<<<<<<< HEAD
         with gr.Blocks(theme=gr.themes.Default(), title="KorT 대시보드") as app:
             with gr.Row(equal_height=False):
                 with gr.Column(scale=9):
+=======
+        head_content = """
+<!-- HTML Meta Tags -->
+<title>KorT 리더보드</title>
+<meta name="description" content="한국어 번역 능력 벤치마크 KorT 리더보드 웹페이지">
+<!-- Facebook Meta Tags -->
+<meta property="og:url" content="https://kort.worldsw.dev">
+<meta property="og:type" content="website">
+<meta property="og:title" content="KorT 리더보드">
+<meta property="og:description" content="한국어 번역 능력 벤치마크 KorT 리더보드 웹페이지">
+<!-- Twitter Meta Tags -->
+<meta name="twitter:title" content="KorT 리더보드">
+<meta name="twitter:description" content="한국어 번역 능력 벤치마크 KorT 리더보드 웹페이지">
+<meta property="twitter:domain" content="kort.worldsw.dev">
+<meta property="twitter:url" content="https://kort.worldsw.dev">
+        """
+        with gr.Blocks(theme=gr.themes.Default(), title="KorT 리더보드", fill_height=True, fill_width=True, head=head_content) as app:
+            with gr.Row(equal_height=False):
+                # Give title more space
+                with gr.Column(scale=7):
+>>>>>>> a09ddd2 (v1.0.0 - Release 1.0)
                     gr.Markdown(
                         """
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
                             <span style="font-size: 1.8em; font-weight: bold; color: orange; margin-right: 10px;">KorT</span>
-                            <span style="font-size: 1.5em; font-weight: bold;">대시보드</span>
+                            <span style="font-size: 1.5em; font-weight: bold;">리더보드</span>
                         </div>
                         """,
                     )
                 with gr.Column(scale=1, min_width=150):
                     button = gr.Button("모델 평가 요청", elem_id="button")
+<<<<<<< HEAD
             button.click(
                 fn=lambda: None,
                 js="function openGithub() { window.open('https://github.com/deveworld/KorT#about'); }",
+=======
+                    button.click(
+                        fn=lambda: None,
+                        js="function openGithub() { window.open('https://github.com/deveworld/KorT#about'); }",
+                    )
+
+            # KorT Description
+            gr.Markdown(
+                """
+                <div style="font-size: 1.2em; margin-bottom: 10px;">
+                    KorT: LLM이 평가하는 한국어-다국어 번역 벤치마크
+                    <br>
+                    번역이 까다로운 문장 데이터셋을 바탕으로 높은 신뢰성을 목표로 합니다.
+                </div>
+                """
+>>>>>>> a09ddd2 (v1.0.0 - Release 1.0)
             )
 
-            # Tabs
             with gr.Tabs():
                 with gr.TabItem(
                     "Leaderboard"

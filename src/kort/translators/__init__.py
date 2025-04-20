@@ -83,9 +83,9 @@ def get_translator_list() -> list[str]:
 if TYPE_CHECKING:
     from .deepl import DeepLAPITranslator, DeepLFreeTranslator
     from .from_model import ModelTranslator
-    from .naver import PapagoFreeTranslator
     from .google import GoogleFreeTranslator
     from .kakao import KakaoFreeTranslator
+    from .naver import PapagoFreeTranslator
 
     __all__ = [
         "BaseTranslator",

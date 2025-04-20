@@ -1,7 +1,8 @@
+import asyncio
 import time
 
-import asyncio
 from googletrans import Translator
+
 from ...data.lang_code import LangCode
 from ...translators.base_translator import BaseTranslator
 
@@ -27,12 +28,12 @@ class GoogleFreeTranslator(BaseTranslator):
         Returns:
             str: The translated text.
         """
+
         async def async_translate():
             return await self.translator.translate(
-                text, 
-                src=source_lang.to_iso639_2(), 
-                dest=target_lang.to_iso639_2()
+                text, src=source_lang.to_iso639_2(), dest=target_lang.to_iso639_2()
             )
+
         try:
             loop = asyncio.get_event_loop()
             output = loop.run_until_complete(async_translate())

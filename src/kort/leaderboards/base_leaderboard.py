@@ -22,7 +22,7 @@ class BaseLeaderBoard:
     """
 
     data: list[ModelSummary] = []
-    leaderboard_data = []
+    leaderboard_data: list[dict[str, str | float]] = []
     raw_data: list[dict] = []
 
     def __init__(self, input_dir: str) -> None:
@@ -58,10 +58,11 @@ class BaseLeaderBoard:
         return {
             "model_name": f"{evaluated.metadata.gen_model_org}/{evaluated.metadata.gen_model_name}",
             "eval_model_name": f"{evaluated.metadata.eval_model_org}/{evaluated.metadata.eval_model_name}",
+            "score": evaluated.metadata.mean_score,
             **{
                 f"{result.generated.category.name}_{i}": result.generated.translated
                 for i, result in enumerate(evaluated.evaluation_results)
-            }
+            },
         }
 
     def load_data(self):
@@ -98,6 +99,10 @@ class BaseLeaderBoard:
             model["Overall Score"] = round(model["Overall Score"], 1)
             for category in common_categories:
                 model[category.name] = round(model[category.name], 1)
+
+        self.raw_data.sort(key=lambda x: x["score"], reverse=True)
+        for model in self.raw_data:
+            model["score"] = round(model["score"], 1)
 
     def launch(self):
         """

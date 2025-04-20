@@ -29,9 +29,7 @@ class KakaoFreeTranslator(BaseTranslator):
         Returns:
             str: The translated text.
         """
-        cookies = {
-            "uvkey": self.uvkey
-        }
+        cookies = {"uvkey": self.uvkey}
 
         headers = {
             "accept": "application/json",

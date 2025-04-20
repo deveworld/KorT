@@ -1,6 +1,8 @@
 # KorT
 Korean Translation Benchmark, LLM-as-a-judge
 
+![KorT Image](kort.png)
+
 ## Abstract
 KorT는 대규모 언어 모델(LLM)을 활용하여 번역 품질을 정량적으로 평가하는 벤치마크입니다.
 

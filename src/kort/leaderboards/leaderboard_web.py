@@ -164,11 +164,6 @@ class LeaderboardWeb(BaseLeaderBoard):
 
     def launch(self):
         """Launches the Gradio web interface."""
-<<<<<<< HEAD
-        with gr.Blocks(theme=gr.themes.Default(), title="KorT 대시보드") as app:
-            with gr.Row(equal_height=False):
-                with gr.Column(scale=9):
-=======
         head_content = """
 <!-- HTML Meta Tags -->
 <title>KorT 리더보드</title>
@@ -188,7 +183,6 @@ class LeaderboardWeb(BaseLeaderBoard):
             with gr.Row(equal_height=False):
                 # Give title more space
                 with gr.Column(scale=7):
->>>>>>> a09ddd2 (v1.0.0 - Release 1.0)
                     gr.Markdown(
                         """
                         <div style="display: flex; align-items: center; margin-bottom: 10px;">
@@ -199,11 +193,6 @@ class LeaderboardWeb(BaseLeaderBoard):
                     )
                 with gr.Column(scale=1, min_width=150):
                     button = gr.Button("모델 평가 요청", elem_id="button")
-<<<<<<< HEAD
-            button.click(
-                fn=lambda: None,
-                js="function openGithub() { window.open('https://github.com/deveworld/KorT#about'); }",
-=======
                     button.click(
                         fn=lambda: None,
                         js="function openGithub() { window.open('https://github.com/deveworld/KorT#about'); }",
@@ -218,7 +207,6 @@ class LeaderboardWeb(BaseLeaderBoard):
                     번역이 까다로운 문장 데이터셋을 바탕으로 높은 신뢰성을 목표로 합니다.
                 </div>
                 """
->>>>>>> a09ddd2 (v1.0.0 - Release 1.0)
             )
 
             with gr.Tabs():

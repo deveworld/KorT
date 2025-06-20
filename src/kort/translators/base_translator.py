@@ -9,10 +9,11 @@ class BaseTranslator:
     """
 
     translator_org: str = "BaseTranslator"
+    translator_name: str = "BaseTranslator"
     _need_api_key: bool = False
     error = 0
 
-    def __init__(self, translator_name: str, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None):
         """
         Initialize the base translator with the specified translator name and API key.
 
@@ -22,7 +23,6 @@ class BaseTranslator:
             *args: Additional positional arguments.
             **kwargs: Additional keyword arguments.
         """
-        self.translator_name = translator_name
         if self.translator_org == "BaseTranslator":
             raise ValueError("BaseTranslator cannot be instantiated directly.")
 

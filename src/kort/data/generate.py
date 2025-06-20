@@ -55,12 +55,12 @@ EVAL_DATA[LangCode.ENG] = {
         ),
         Example(
             source="Yeah, when pigs fly. You know.",
-            translation={LangCode.KOR: "아니, 절대로. 너도 알잖아."},
+            translation={LangCode.KOR: "아니, 절대로. 너도 알잖아. (pigs fly를 제대로 번역하지 못하면 점수를 낮게 줄 것)"},
         ),
         Example(
             source="What a pencil fest! Typical engineering school.",
             translation={
-                LangCode.KOR: "완전 고추밭이네! 전형적인 공대야. (pencil fest를 제대로 번역하지 못하면 점수를 매우 낮게 줄 것)."
+                LangCode.KOR: "완전 고추밭이네! 전형적인 공대야. (pencil fest를 제대로 번역하지 못하면 점수를 낮게 줄 것)."
             },
         ),
     ],
@@ -143,7 +143,7 @@ EVAL_DATA[LangCode.ENG] = {
         ),
         Example(
             source="This is a real Catch-22 situation.",
-            translation={LangCode.KOR: "이것은 진퇴양난의 상황이다."},
+            translation={LangCode.KOR: "이것은 진퇴양난의 상황이다. (Catch-22를 제대로 번역하지 못하면 점수를 낮게 줄 것)"},
         ),
         Example(
             source="He's a bit of a Jekyll and Hyde character.",

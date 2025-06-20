@@ -61,14 +61,14 @@ if __name__ == "__main__":
         if args.api_key is None:
             parser.error("the following arguments are required: --api_key")
             exit(0)
-        if evaluator_class is type[BaseEvaluator]:
+        if issubclass(evaluator_class, BaseEvaluator):
             evaluator = evaluator_class(api_key=args.api_key)
         else:
             evaluator = ModelEvaluator(
                 model_type, args.model_name, api_key=args.api_key
             )
     else:
-        if evaluator_class is type[BaseEvaluator]:
+        if issubclass(evaluator_class, BaseEvaluator):
             evaluator = evaluator_class()
         else:
             evaluator = ModelEvaluator(model_type, args.model_name)

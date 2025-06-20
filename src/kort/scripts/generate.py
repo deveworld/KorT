@@ -67,7 +67,7 @@ if __name__ == "__main__":
         if args.api_key is None:
             parser.error("the following arguments are required: --api_key")
             exit(0)
-        if translator_class is Type[BaseTranslator]:
+        if issubclass(translator_class, BaseTranslator):
             translator = translator_class(api_key=args.api_key)
         else:
             translator = ModelTranslator(
@@ -79,7 +79,7 @@ if __name__ == "__main__":
                 stop=stop,
             )
     else:
-        if translator_class is Type[BaseTranslator]:
+        if issubclass(translator_class, BaseTranslator):
             translator = translator_class()
         else:
             translator = ModelTranslator(

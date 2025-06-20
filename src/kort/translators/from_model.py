@@ -48,7 +48,7 @@ class ModelTranslator(BaseTranslator):
             if base_prompt in CUSTOM_PROMPTS.keys():
                 base_prompt = CUSTOM_PROMPTS[base_prompt]
         self.base_prompt = base_prompt
-        super().__init__(self.translator_name)
+        super().__init__()
 
     def translate(self, text: str, source_lang: LangCode, target_lang: LangCode) -> str:
         """

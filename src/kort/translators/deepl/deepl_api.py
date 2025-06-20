@@ -12,7 +12,7 @@ class DeepLAPITranslator(BaseTranslator):
     _need_api_key = True
 
     def __init__(self, api_key: str):
-        super().__init__(self.translator_name, api_key)
+        super().__init__(api_key)
         self.translator = deepl.DeepLClient(self.api_key)
 
     def translate(self, text: str, source_lang: LangCode, target_lang: LangCode) -> str:

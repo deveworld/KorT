@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ..data import EvaluationResult, GenerationExample
 
 
@@ -7,10 +9,11 @@ class BaseEvaluator:
     """
 
     evaluator_org: str = "BaseEvaluator"
+    evaluator_name: str = "BaseEvaluator"
     _need_api_key: bool = False
     error = 0
 
-    def __init__(self, evaluator_name: str, api_key: str = None):
+    def __init__(self, api_key: Optional[str] = None):
         """
         Initialize the base evaluator with the specified evaluator name and API key.
 
@@ -20,7 +23,6 @@ class BaseEvaluator:
             *args: Additional positional arguments.
             **kwargs: Additional keyword arguments.
         """
-        self.evaluator_name = evaluator_name
         if self.evaluator_org == "BaseEvaluator":
             raise ValueError("BaseEvaluator cannot be instantiated directly.")
 

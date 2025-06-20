@@ -1,14 +1,20 @@
 import re
 import warnings
+from typing import Optional, Type
 
 from ..data import PROMPTS, BatchStatus, EvaluationResult, GenerationExample, PromptTask
 from ..evaluators import BaseEvaluator
-from ..models import BatchModel, get_model
+from ..models import BaseModel, BatchModel, get_model
 
 
 class BatchModelEvaluator(BaseEvaluator):
-    def __init__(self, model_type: str, model_name: str, api_key: str = None):
-        self.model: BatchModel = get_model(model_type)(
+    def __init__(self, model_type: str, model_name: str, api_key: Optional[str] = None):
+        model_class: Type[BaseModel] = get_model(model_type)
+        if not issubclass(model_class, BatchModel):
+            raise ValueError(
+                f"Model {model_class} is not a batch model. Use ModelEvaluator instead."
+            )
+        self.model: BatchModel = model_class(
             model_name, api_key=api_key, evaluation=True
         )
         if not self.model:

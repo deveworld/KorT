@@ -1,3 +1,5 @@
+from typing import Optional
+
 import gradio as gr
 import pandas as pd
 
@@ -18,7 +20,9 @@ class LeaderboardWeb(BaseLeaderBoard):
         self.category_cols = ["Overall Score"] + [cat.value for cat in Categories]
         self.cols = ["Rank", "Model Name"] + self.category_cols
 
-    def update_leaderboard_data(self, search_term: str = None, sort_by: str = None):
+    def update_leaderboard_data(
+        self, search_term: Optional[str] = None, sort_by: Optional[str] = None
+    ):
         """
         Update the leaderboard data based on the search term and category.
         """
@@ -28,7 +32,7 @@ class LeaderboardWeb(BaseLeaderBoard):
             updated_data = [
                 item
                 for item in updated_data
-                if search_term.lower() in item["Model Name"].lower()
+                if search_term.lower() in str(item["Model Name"]).lower()
             ]
 
         if sort_by and sort_by in updated_data[0]:
@@ -179,7 +183,9 @@ class LeaderboardWeb(BaseLeaderBoard):
 <meta property="twitter:domain" content="kort.worldsw.dev">
 <meta property="twitter:url" content="https://kort.worldsw.dev">
         """
-        with gr.Blocks(theme=gr.themes.Default(), title="KorT 리더보드", fill_height=True, fill_width=True, head=head_content) as app:
+        with gr.Blocks(
+            title="KorT 리더보드", fill_height=True, fill_width=True, head=head_content
+        ) as app:
             with gr.Row(equal_height=False):
                 # Give title more space
                 with gr.Column(scale=7):
@@ -210,9 +216,7 @@ class LeaderboardWeb(BaseLeaderBoard):
             )
 
             with gr.Tabs():
-                with gr.TabItem(
-                    "Leaderboard"
-                ):
+                with gr.TabItem("Leaderboard"):
                     self.leaderboard()
                 with gr.TabItem("Raw Data"):
                     self.view_raw_data()

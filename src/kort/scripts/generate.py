@@ -1,12 +1,18 @@
 import argparse
 import os
 import time
+from typing import Type
 
 import tqdm
 
 from ..data import EVAL_DATA, Generated, GenerationExample, GenerationMetadata, LangCode
-from ..models import get_model, get_model_list
-from ..translators import ModelTranslator, get_translator, get_translator_list
+from ..models import BaseModel, get_model, get_model_list
+from ..translators import (
+    BaseTranslator,
+    ModelTranslator,
+    get_translator,
+    get_translator_list,
+)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Kort Generate CLI")
@@ -37,11 +43,10 @@ if __name__ == "__main__":
         exit(0)
 
     model_type = str(args.model_type)
-    is_native = False
+    translator_class: Type[BaseTranslator] | Type[BaseModel]
     if model_type in get_translator_list():
         print("Using native translator:", model_type)
         translator_class = get_translator(model_type)
-        is_native = True
     elif model_type in get_model_list():
         print("Using model for translator:", model_type)
         translator_class = get_model(model_type)
@@ -57,11 +62,12 @@ if __name__ == "__main__":
     prompt = args.prompt_type
     device = args.device
     stop = args.stop
+    translator: BaseTranslator | ModelTranslator
     if translator_class._need_api_key:
         if args.api_key is None:
             parser.error("the following arguments are required: --api_key")
             exit(0)
-        if is_native:
+        if translator_class is Type[BaseTranslator]:
             translator = translator_class(api_key=args.api_key)
         else:
             translator = ModelTranslator(
@@ -73,7 +79,7 @@ if __name__ == "__main__":
                 stop=stop,
             )
     else:
-        if is_native:
+        if translator_class is Type[BaseTranslator]:
             translator = translator_class()
         else:
             translator = ModelTranslator(
@@ -84,8 +90,8 @@ if __name__ == "__main__":
                 stop=stop,
             )
 
-    org = translator.translator_org if is_native else translator.model.model_org
-    name = translator.translator_name if is_native else translator.model.model_name
+    org = translator.translator_org
+    name = translator.translator_name
     output = args.output
     if output is None:
         output = f"generated/{org.lower()}_{name.lower()}.json"
@@ -103,6 +109,10 @@ if __name__ == "__main__":
             return LangCode.ENG
         elif code == LangCode.ENG:
             return LangCode.KOR
+        else:
+            raise ValueError(
+                f"Unsupported language code for inversion: {code}. Only KOR and ENG are supported."
+            )
 
     generated = []
     for source_lang, categories in tqdm.tqdm(

@@ -33,9 +33,9 @@ class BaseLeaderBoard:
         """
         Get a summary of the evaluated model.
         """
-        sum_overall_score: int = 0
-        sum_category_scores: dict[Categories, int] = {}
-        count_category: dict[Categories, int] = {}
+        sum_overall_score: float = 0
+        sum_category_scores: dict[Categories, float] = {}
+        count_category: dict[Categories, float] = {}
         for result in evaluated.evaluation_results:
             sum_overall_score += result.score
             if result.generated.category not in sum_category_scores:
@@ -96,9 +96,9 @@ class BaseLeaderBoard:
         self.leaderboard_data.sort(key=lambda x: x["Overall Score"], reverse=True)
         # round scroes
         for model in self.leaderboard_data:
-            model["Overall Score"] = round(model["Overall Score"], 1)
+            model["Overall Score"] = round(float(model["Overall Score"]), 1)
             for category in common_categories:
-                model[category.name] = round(model[category.name], 1)
+                model[category.name] = round(float(model[category.name]), 1)
 
         self.raw_data.sort(key=lambda x: x["score"], reverse=True)
         for model in self.raw_data:

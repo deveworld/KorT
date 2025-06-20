@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 
 import anthropic
 from anthropic import Anthropic
@@ -13,12 +14,13 @@ class ClaudeModel(BaseModel):
     def __init__(
         self,
         model_name: str,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         evaluation: bool = False,
         *args,
         **kwargs,
     ):
-        super().__init__(model_name, api_key, evaluation=evaluation, *args, **kwargs)
+        self.model_name = model_name
+        super().__init__(api_key, evaluation=evaluation, *args, **kwargs)
         self.client = Anthropic(api_key=api_key)
 
     def inference(self, input: str) -> str:
@@ -31,6 +33,8 @@ class ClaudeModel(BaseModel):
                 if not self.evaluation
                 else {"type": "enabled", "budget_tokens": 16000},
             )
+            if result.content[-1].type != "text":
+                raise ValueError(f"Unexpected content type: {result.content[-1].type}")
             output = result.content[-1].text
         except Exception as e:
             print(e)

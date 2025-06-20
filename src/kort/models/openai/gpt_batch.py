@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Optional
 
 from openai import OpenAI
 
@@ -14,7 +15,7 @@ class OpenAIBatchModel(BatchModel):
     def __init__(
         self,
         model_name: str,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         evaluation: bool = False,
         *args,
         **kwargs,
@@ -72,6 +73,8 @@ class OpenAIBatchModel(BatchModel):
             raise Exception(f"Job {job_id} is not completed yet.")
 
         job = self.client.batches.retrieve(job_id)
+        if not job.output_file_id:
+            raise Exception(f"Job {job_id} has no output file.")
         jsonl = self.client.files.content(job.output_file_id).text
 
         results = {}

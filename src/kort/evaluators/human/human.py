@@ -7,7 +7,7 @@ class HumanEvaluator(BaseEvaluator):
     evaluator_name = "HumanEvaluator"
 
     def __init__(self):
-        super().__init__(self.evaluator_name)
+        super().__init__()
 
     def evaluate(self, generated: GenerationExample) -> EvaluationResult:
         """

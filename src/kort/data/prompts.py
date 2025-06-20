@@ -8,7 +8,7 @@ class PromptTask(Enum):
     EVALUATE = "evaluate"  # Evaluate translation
 
 
-PROMPTS: dict[str, str] = {}
+PROMPTS: dict[PromptTask, str] = {}
 
 PROMPTS[
     PromptTask.TRANSLATE

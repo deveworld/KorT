@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 
 
 class BaseModel:
@@ -7,17 +8,17 @@ class BaseModel:
     """
 
     model_org: str = "BaseModel"
+    model_name: str = "BaseModel"
     _need_api_key: bool = False
     error = 0
     last_error = time.time()
 
     def __init__(
         self,
-        model_name: str,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         evaluation: bool = False,
-        device: str = None,
-        stop: str = None,
+        device: Optional[str] = None,
+        stop: Optional[str] = None,
     ):
         """
         Initialize the base model with the specified model name and API key.
@@ -28,7 +29,6 @@ class BaseModel:
             *args: Additional positional arguments.
             **kwargs: Additional keyword arguments.
         """
-        self.model_name = model_name
         if self.model_org == "BaseModel":
             raise ValueError("BaseModel cannot be instantiated directly.")
 

@@ -1,11 +1,11 @@
 import sys
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 
 from ..utils import _LazyModule
 from .base_model import BaseModel
 
 
-def get_model(model_type: str) -> BaseModel:
+def get_model(model_type: str) -> Type[BaseModel]:
     """
     Get the model class based on the model name.
 

@@ -1,5 +1,8 @@
 import torch
-from transformers import StoppingCriteria, StoppingCriteriaList
+from transformers.generation.stopping_criteria import (
+    StoppingCriteria,
+    StoppingCriteriaList,
+)
 
 from ..transformer_model import TransformersModel
 
@@ -9,12 +12,16 @@ class StoppingCriteriaSub(StoppingCriteria):
         super().__init__()
         self.stops = [stop for stop in stops]
 
-    def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor):
+    def __call__(
+        self, input_ids: torch.LongTensor, scores: torch.FloatTensor, **kwargs
+    ) -> torch.BoolTensor:
         for stop in self.stops:
-            if torch.all((stop == input_ids[0][-len(stop) :])).item():
-                return True
+            if input_ids.shape[1] >= len(stop) and torch.all(
+                (stop == input_ids[0][-len(stop) :])
+            ):
+                return torch.BoolTensor([True], device=input_ids.device)
 
-        return False
+        return torch.BoolTensor([False], device=input_ids.device)
 
 
 class GugugoModel(TransformersModel):

@@ -1,9 +1,14 @@
+from typing import Optional
+
 from anthropic import Anthropic
 from anthropic.types.content_block import ContentBlock
 from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
 from anthropic.types.messages.batch_create_params import Request
 from anthropic.types.messages.message_batch_individual_response import (
     MessageBatchIndividualResponse,
+)
+from anthropic.types.messages.message_batch_succeeded_result import (
+    MessageBatchSucceededResult,
 )
 
 from ...data import BatchStatus
@@ -17,7 +22,7 @@ class ClaudeBatchModel(BatchModel):
     def __init__(
         self,
         model_name: str,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         evaluation: bool = False,
         *args,
         **kwargs,
@@ -59,12 +64,15 @@ class ClaudeBatchModel(BatchModel):
         if not self.batch_status(job_id) == BatchStatus.COMPLETED:
             raise Exception(f"Job {job_id} is not completed yet.")
 
-        job_results: list[MessageBatchIndividualResponse] = (
+        job_results: list[MessageBatchIndividualResponse] = list(
             self.client.messages.batches.results(job_id)
         )
         results = {}
         for batch in job_results:
+            if not isinstance(batch.result, MessageBatchSucceededResult):
+                continue
             output: ContentBlock = batch.result.message.content[-1]
-            results[batch.custom_id] = output.text
+            if output.type == "text":
+                results[batch.custom_id] = output.text
 
         return results

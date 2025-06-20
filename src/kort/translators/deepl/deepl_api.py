@@ -36,9 +36,11 @@ class DeepLAPITranslator(BaseTranslator):
                 text,
                 source_lang=source_lang.to_iso639_2().upper(),
                 target_lang=target_lang_upper,
-                model_type="prefer_quality_optimized",
             )
-            output = result.text
+            if isinstance(result, list):
+                output = result[0].text if result else ""
+            else:
+                output = result.text
         except Exception as e:
             print(e)
             if self.error_retry():

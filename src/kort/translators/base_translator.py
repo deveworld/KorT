@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ..data import LangCode
 
 
@@ -10,7 +12,7 @@ class BaseTranslator:
     _need_api_key: bool = False
     error = 0
 
-    def __init__(self, translator_name: str, api_key: str = None):
+    def __init__(self, translator_name: str, api_key: Optional[str] = None):
         """
         Initialize the base translator with the specified translator name and API key.
 

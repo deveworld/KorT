@@ -9,7 +9,7 @@ class EvaluationResult(BaseModel):
     """
 
     generated: GenerationExample
-    score: int
+    score: float
 
 
 class EvaluationMetadata(BaseModel):

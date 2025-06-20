@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ..data import CUSTOM_PROMPTS, PROMPTS, LangCode, PromptTask
 from ..models import BaseModel, get_model
 from ..translators import BaseTranslator
@@ -12,10 +14,10 @@ class ModelTranslator(BaseTranslator):
         self,
         model_type: str,
         model_name: str,
-        api_key: str = None,
-        base_prompt: str = None,
-        device: str = None,
-        stop: str = None,
+        api_key: Optional[str] = None,
+        base_prompt: Optional[str] = None,
+        device: Optional[str] = None,
+        stop: Optional[str] = None,
     ):
         """
         Initialize the ModelTranslator with a specific model type and name.
@@ -32,8 +34,9 @@ class ModelTranslator(BaseTranslator):
         Raises:
             ValueError: If the model type is not found or if the model initialization fails.
         """
+        self.model_name = model_name
         self.model: BaseModel = get_model(model_type)(
-            model_name, api_key=api_key, device=device, stop=stop
+            api_key=api_key, device=device, stop=stop
         )
         if not self.model:
             raise ValueError(f"Model {model_type} not found.")

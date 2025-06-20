@@ -86,7 +86,7 @@ class _LazyModule(types.ModuleType):
         """List available attributes including lazy-loadable ones."""
         return list(
             set(
-                super().__dir__()
+                list(super().__dir__())
                 + list(self._attr_to_module.keys())
                 + list(self._loaded_attrs.keys())
             )

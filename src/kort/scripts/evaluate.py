@@ -2,12 +2,18 @@ import argparse
 import json
 import os
 import time
+from typing import Type
 
 import tqdm
 
 from ..data import Evaluated, EvaluationMetadata, EvaluationResult, Generated
-from ..evaluators import ModelEvaluator, get_evaluator, get_evaluator_list
-from ..models import get_model, get_model_list
+from ..evaluators import (
+    BaseEvaluator,
+    ModelEvaluator,
+    get_evaluator,
+    get_evaluator_list,
+)
+from ..models import BaseModel, get_model, get_model_list
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Kort Evaluate CLI")
@@ -34,11 +40,10 @@ if __name__ == "__main__":
         exit(0)
 
     model_type = str(args.model_type)
-    is_native = False
+    evaluator_class: type[BaseEvaluator] | Type[BaseModel]
     if model_type in get_evaluator_list():
         print("Using native evaluator:", model_type)
         evaluator_class = get_evaluator(model_type)
-        is_native = True
     elif model_type in get_model_list():
         print("Using model for evaluator:", model_type)
         evaluator_class = get_model(model_type)
@@ -50,23 +55,25 @@ if __name__ == "__main__":
             f"Model type '{model_type}' not found. Use --list to see available model types."
         )
         exit(0)
+
+    evaluator: BaseEvaluator | ModelEvaluator
     if evaluator_class._need_api_key:
         if args.api_key is None:
             parser.error("the following arguments are required: --api_key")
             exit(0)
-        if is_native:
+        if evaluator_class is type[BaseEvaluator]:
             evaluator = evaluator_class(api_key=args.api_key)
         else:
             evaluator = ModelEvaluator(
                 model_type, args.model_name, api_key=args.api_key
             )
     else:
-        if is_native:
+        if evaluator_class is type[BaseEvaluator]:
             evaluator = evaluator_class()
         else:
             evaluator = ModelEvaluator(model_type, args.model_name)
 
-    org = evaluator_class.evaluator_org if is_native else evaluator_class.model_org
+    org = evaluator.evaluator_org
     name = args.model_name if args.model_name else "N/A"
     print(f"Using {org} {model_type} - {name}")
     if args.input is None:

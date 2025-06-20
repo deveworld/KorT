@@ -6,7 +6,9 @@ class LeaderBoardText(BaseLeaderBoard):
         super().__init__(input_dir)
 
     def launch(self):
-        max_length = max(len(model["Model Name"]) for model in self.leaderboard_data)
+        max_length = max(
+            len(str(model["Model Name"])) for model in self.leaderboard_data
+        )
 
         print("# KorT Leaderboard")
         print("## Models")

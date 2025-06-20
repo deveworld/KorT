@@ -1,4 +1,5 @@
 import time
+from typing import Optional
 
 from google import genai
 from google.genai import errors, types
@@ -13,14 +14,15 @@ class GeminiModel(BaseModel):
     def __init__(
         self,
         model_name: str,
-        api_key: str = None,
+        api_key: Optional[str] = None,
         temperature: float = 0.3,
-        max_output_tokens: int = None,
+        max_output_tokens: Optional[int] = None,
         evaluation: bool = False,
         *args,
         **kwargs,
     ):
-        super().__init__(model_name, api_key, *args, **kwargs)
+        self.model_name = model_name
+        super().__init__(api_key=api_key, *args, **kwargs)
         self.client = genai.Client(api_key=self.api_key)
         self.temperature = temperature
         self.max_output_tokens = (

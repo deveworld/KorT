@@ -1,11 +1,11 @@
 import sys
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 
 from ..utils import _LazyModule
 from .base_evaluator import BaseEvaluator
 
 
-def get_evaluator(evaluator_name: str) -> BaseEvaluator:
+def get_evaluator(evaluator_name: str) -> Type[BaseEvaluator]:
     """
     Get the evaluator class based on the evaluator name.
 

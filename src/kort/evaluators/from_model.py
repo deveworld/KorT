@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from ..data import PROMPTS, EvaluationResult, GenerationExample, PromptTask
 from ..evaluators import BaseEvaluator
@@ -6,10 +7,9 @@ from ..models import BaseModel, get_model
 
 
 class ModelEvaluator(BaseEvaluator):
-    def __init__(self, model_type: str, model_name: str, api_key: str = None):
-        self.model: BaseModel = get_model(model_type)(
-            model_name, api_key=api_key, evaluation=True
-        )
+    def __init__(self, model_type: str, model_name: str, api_key: Optional[str] = None):
+        self.model_name = model_name
+        self.model: BaseModel = get_model(model_type)(api_key=api_key, evaluation=True)
         if not self.model:
             raise ValueError(f"Model {model_type} not found.")
         self.evaluator_org = self.model.model_org

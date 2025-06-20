@@ -1,11 +1,11 @@
 import sys
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 
 from ..utils import _LazyModule
 from .base_translator import BaseTranslator
 
 
-def get_translator(translator_name: str) -> BaseTranslator:
+def get_translator(translator_name: str) -> Type[BaseTranslator]:
     """
     Get the translator class based on the translator name.
 

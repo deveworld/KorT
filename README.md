@@ -18,7 +18,7 @@ KorT의 핵심 목표는 기존 자동 평가 지표보다 인간의 판단과 �
 ## About
 - 현재 리더보드는 [여기서](https://kort.worldsw.dev) 확인하실 수 있습니다.
 - 평가 LLM은 `claude-3-7-sonnet-20250219 (Reasoning)`입니다.
-- 모델 평가를 원하시면 [이메일로](mailto:world@worldsw.dev) 문의해 주세요. 
+- 모델 평가를 원하시면 [여기 이메일로](mailto:world@worldsw.dev) 문의해 주세요. 
 - 만약 자체 평가 프롬프트를 사용하셨다면, 함께 제공해 주시기 바랍니다.
 
 ## Usage

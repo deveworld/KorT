@@ -87,7 +87,11 @@ if __name__ == "__main__":
         print(f"Error loading input file '{input_file}': {e}")
         exit(0)
 
-    generated_data = Generated(**data)
+    try:
+        generated_data = Generated.model_validate(data)
+    except Exception as e:
+        print(f"Error validating input data: {e}")
+        exit(0)
     item_count = len(generated_data.generated_examples)
     print(f"Loaded {item_count} generated data item(s) from `{input_file}`")
     if item_count < 1:

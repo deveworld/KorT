@@ -19,6 +19,9 @@ class PapagoFreeTranslator(BaseTranslator):
         super().__init__(self.translator_name)
         self.url = "https://papago.naver.com/apis/n2mt/translate"
         self.key = "v1.8.9_a5c5d7faee"
+        self.device_id = ""
+        self.timestamp = ""
+        self.authorization = ""
         self.refresh_token()
 
     def refresh_token(self):

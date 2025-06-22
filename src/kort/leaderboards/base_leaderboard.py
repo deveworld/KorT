@@ -73,7 +73,7 @@ class BaseLeaderBoard:
             with open(file_path, "r") as f:
                 data = json.load(f)
             try:
-                evaluated = Evaluated(**data)
+                evaluated = Evaluated.model_validate(data)
                 self.data.append(self.get_summary(evaluated))
                 self.raw_data.append(self.flatten_data(evaluated))
             except Exception as e:
@@ -104,7 +104,7 @@ class BaseLeaderBoard:
         for model in self.raw_data:
             model["score"] = round(model["score"], 1)
 
-    def launch(self):
+    def launch(self) -> None:
         """
         Launch the leaderboard.
         """

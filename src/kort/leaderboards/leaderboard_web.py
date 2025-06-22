@@ -13,11 +13,11 @@ class LeaderboardWeb(BaseLeaderBoard):
         print(f"Loaded {len(self.leaderboard_data)} models for the leaderboard.")
         for i, data in enumerate(self.leaderboard_data):
             data["Rank"] = i + 1
-            for category in Categories:
+            for category in Categories.__members__.values():
                 if category.name not in data.keys():
                     continue
                 data[category.value] = data[category.name]
-        self.category_cols = ["Overall Score"] + [cat.value for cat in Categories]
+        self.category_cols = ["Overall Score"] + [cat.value for cat in Categories.__members__.values()]
         self.cols = ["Rank", "Model Name"] + self.category_cols
 
     def update_leaderboard_data(
@@ -62,7 +62,7 @@ class LeaderboardWeb(BaseLeaderBoard):
                 )
                 return leaderboard_tab
 
-            data = pd.DataFrame(self.leaderboard_data, columns=self.cols)
+            data = pd.DataFrame(self.leaderboard_data, columns=pd.Index(self.cols))
 
             leaderboard_display = gr.DataFrame(
                 data,
@@ -74,7 +74,7 @@ class LeaderboardWeb(BaseLeaderBoard):
 
             def update_display(search_term, sort_by):
                 updated_data = self.update_leaderboard_data(search_term, sort_by)
-                pd_updated_data = pd.DataFrame(updated_data, columns=self.cols)
+                pd_updated_data = pd.DataFrame(updated_data, columns=pd.Index(self.cols))
                 return gr.DataFrame(
                     pd_updated_data,
                     headers=self.cols,

@@ -19,7 +19,7 @@ def get_evaluator(evaluator_name: str) -> Type[BaseEvaluator]:
 
     # Check if we're using a LazyModule
     module = sys.modules[__name__]
-    if hasattr(module, "_attr_to_module"):
+    if isinstance(module, _LazyModule):
         # Check if this model is in the lazy module's attributes
         for attr_name in module._attr_to_module.keys():
             if attr_name.lower() == evaluator_class_name.lower():
@@ -54,7 +54,7 @@ def get_evaluator_list() -> list[str]:
 
     # Check if we're using a LazyModule and add its models
     module = sys.modules[__name__]
-    if hasattr(module, "_attr_to_module"):
+    if isinstance(module, _LazyModule):
         # Add models from lazy module's attributes
         evaluator_name.extend(
             [

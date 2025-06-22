@@ -1,8 +1,9 @@
 import time
 from typing import Optional
 
-import anthropic
 from anthropic import Anthropic
+from anthropic.types.thinking_config_enabled_param import ThinkingConfigEnabledParam
+from anthropic.types.thinking_config_disabled_param import ThinkingConfigDisabledParam
 
 from ..base_model import BaseModel
 
@@ -20,18 +21,18 @@ class ClaudeModel(BaseModel):
         **kwargs,
     ):
         self.model_name = model_name
-        super().__init__(api_key, evaluation=evaluation, *args, **kwargs)
+        super().__init__(api_key=api_key, evaluation=evaluation, *args, **kwargs)
         self.client = Anthropic(api_key=api_key)
 
     def inference(self, input: str) -> str:
         try:
             result = self.client.messages.create(
-                model=self.model_name,
+                model=self.model_name, # type: ignore[arg-type]
                 messages=[{"role": "user", "content": input}],
                 max_tokens=8192 if not self.evaluation else 16512,
-                thinking=anthropic.NOT_GIVEN
+                thinking=ThinkingConfigDisabledParam(type="disabled")
                 if not self.evaluation
-                else {"type": "enabled", "budget_tokens": 16000},
+                else ThinkingConfigEnabledParam(type="enabled", budget_tokens=16000),
             )
             if result.content[-1].type != "text":
                 raise ValueError(f"Unexpected content type: {result.content[-1].type}")

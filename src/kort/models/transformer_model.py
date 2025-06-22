@@ -6,8 +6,8 @@ from .base_model import BaseModel
 class TransformersModel(BaseModel):
     model_org = ""
 
-    def __init__(self, model_name: str, evaluation: bool = False, *args, **kwargs):
-        super().__init__(model_name, evaluation=evaluation, *args, **kwargs)
+    def __init__(self, model_name: str, *, evaluation: bool, **kwargs):
+        super().__init__(evaluation=evaluation, **kwargs)
         device_map = self.device if self.device else "auto"
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForCausalLM.from_pretrained(

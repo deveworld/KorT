@@ -19,7 +19,7 @@ def get_translator(translator_name: str) -> Type[BaseTranslator]:
 
     # Check if we're using a LazyModule
     module = sys.modules[__name__]
-    if hasattr(module, "_attr_to_module"):
+    if isinstance(module, _LazyModule):
         # Check if this translator is in the lazy module's attributes
         for attr_name in module._attr_to_module.keys():
             if attr_name.lower() == translator_class_name.lower():
@@ -44,8 +44,7 @@ def get_translator_list() -> list[str]:
     # This version works with _LazyModule by checking module's internal state
     module = sys.modules[__name__]
 
-    # If this is a _LazyModule, use its attribute mapping
-    if hasattr(module, "_attr_to_module"):
+    if isinstance(module, _LazyModule):
         translator_names = []
 
         # Get translators from normal globals

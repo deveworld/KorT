@@ -1,7 +1,10 @@
 from typing import Optional
 
 from anthropic import Anthropic
+from anthropic.types.text_block import TextBlock
 from anthropic.types.content_block import ContentBlock
+from anthropic.types.thinking_config_enabled_param import ThinkingConfigEnabledParam
+from anthropic.types.thinking_config_disabled_param import ThinkingConfigDisabledParam
 from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
 from anthropic.types.messages.batch_create_params import Request
 from anthropic.types.messages.message_batch_individual_response import (
@@ -39,9 +42,9 @@ class ClaudeBatchModel(BatchModel):
                     params=MessageCreateParamsNonStreaming(
                         model=self.model_name,
                         max_tokens=8192 if not self.evaluation else 16512,
-                        thinking={"type": "disabled"}
+                        thinking=ThinkingConfigDisabledParam(type="disabled")
                         if not self.evaluation
-                        else {"type": "enabled", "budget_tokens": 16000},
+                        else ThinkingConfigEnabledParam(type="enabled", budget_tokens=16000),
                         messages=[{"role": "user", "content": value}],
                     ),
                 )
@@ -72,7 +75,7 @@ class ClaudeBatchModel(BatchModel):
             if not isinstance(batch.result, MessageBatchSucceededResult):
                 continue
             output: ContentBlock = batch.result.message.content[-1]
-            if output.type == "text":
+            if isinstance(output, TextBlock) and output.type == "text":
                 results[batch.custom_id] = output.text
 
         return results

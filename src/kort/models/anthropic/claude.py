@@ -2,8 +2,8 @@ import time
 from typing import Optional
 
 from anthropic import Anthropic
-from anthropic.types.thinking_config_enabled_param import ThinkingConfigEnabledParam
 from anthropic.types.thinking_config_disabled_param import ThinkingConfigDisabledParam
+from anthropic.types.thinking_config_enabled_param import ThinkingConfigEnabledParam
 
 from ..base_model import BaseModel
 
@@ -27,7 +27,7 @@ class ClaudeModel(BaseModel):
     def inference(self, input: str) -> str:
         try:
             result = self.client.messages.create(
-                model=self.model_name, # type: ignore[arg-type]
+                model=self.model_name,  # type: ignore[arg-type]
                 messages=[{"role": "user", "content": input}],
                 max_tokens=8192 if not self.evaluation else 16512,
                 thinking=ThinkingConfigDisabledParam(type="disabled")

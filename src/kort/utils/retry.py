@@ -33,6 +33,7 @@ def retry_with_backoff(
         def wrapper(*args, **kwargs) -> T:
             last_exception = None
 
+            func_name = getattr(func, "__name__", repr(func))
             for attempt in range(max_retries + 1):
                 try:
                     return func(*args, **kwargs)
@@ -40,19 +41,19 @@ def retry_with_backoff(
                     last_exception = e
                     if attempt == max_retries:
                         logger.error(
-                            f"Function {func.__name__} failed after {max_retries} retries: {e}"
+                            f"Function {func_name} failed after {max_retries} retries: {e}"
                         )
                         raise
 
                     delay = base_delay * (backoff_factor**attempt)
                     logger.warning(
-                        f"Attempt {attempt + 1} failed for {func.__name__}: {e}. Retrying in {delay:.1f}s..."
+                        f"Attempt {attempt + 1} failed for {func_name}: {e}. Retrying in {delay:.1f}s..."
                     )
                     time.sleep(delay)
 
             # This should never be reached, but just in case
             raise last_exception or KorTException(
-                f"Function {func.__name__} failed unexpectedly"
+                f"Function {func_name} failed unexpectedly"
             )
 
         return wrapper

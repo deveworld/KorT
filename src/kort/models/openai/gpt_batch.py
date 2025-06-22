@@ -80,7 +80,8 @@ class OpenAIBatchModel(BatchModel):
         results = {}
         for data in jsonl.splitlines():
             loaded_data = json.loads(data)
-            results[loaded_data["custom_id"]] = \
-                loaded_data["response"]["body"]["choices"][-1]["message"]["content"]
+            results[loaded_data["custom_id"]] = loaded_data["response"]["body"][
+                "choices"
+            ][-1]["message"]["content"]
 
         return results

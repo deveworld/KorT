@@ -17,7 +17,9 @@ class LeaderboardWeb(BaseLeaderBoard):
                 if category.name not in data.keys():
                     continue
                 data[category.value] = data[category.name]
-        self.category_cols = ["Overall Score"] + [cat.value for cat in Categories.__members__.values()]
+        self.category_cols = ["Overall Score"] + [
+            cat.value for cat in Categories.__members__.values()
+        ]
         self.cols = ["Rank", "Model Name"] + self.category_cols
 
     def update_leaderboard_data(
@@ -74,7 +76,9 @@ class LeaderboardWeb(BaseLeaderBoard):
 
             def update_display(search_term, sort_by):
                 updated_data = self.update_leaderboard_data(search_term, sort_by)
-                pd_updated_data = pd.DataFrame(updated_data, columns=pd.Index(self.cols))
+                pd_updated_data = pd.DataFrame(
+                    updated_data, columns=pd.Index(self.cols)
+                )
                 return gr.DataFrame(
                     pd_updated_data,
                     headers=self.cols,

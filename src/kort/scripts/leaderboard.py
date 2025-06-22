@@ -1,3 +1,31 @@
+"""
+Leaderboard Script for KorT Package
+
+This script provides a command-line interface for generating and displaying
+leaderboards based on evaluation results from the KorT framework.
+
+The script supports:
+- Text-based leaderboard display for command-line viewing
+- Web-based interactive leaderboard with filtering and sorting
+- Automatic data loading from evaluation result directories
+- Multiple display formats and customization options
+
+Usage:
+    python -m kort.scripts.leaderboard [OPTIONS]
+
+Arguments:
+    -t, --text: Display leaderboard in text format (default: web interface)
+    -i, --input: Input directory containing evaluation results
+
+The script automatically discovers and loads all evaluation result files
+from the specified directory, aggregates the results, and presents them
+in a ranked leaderboard format.
+
+Example:
+    $ python -m kort.scripts.leaderboard -i ./evaluated --text
+    $ python -m kort.scripts.leaderboard -i ./results  # Web interface
+"""
+
 import argparse
 import os
 

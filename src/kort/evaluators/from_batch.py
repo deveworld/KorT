@@ -29,7 +29,7 @@ class BatchModelEvaluator(BaseEvaluator):
 
                 Args:
                     generated_examples (list[GenerationExample]): The list of generated examples to evaluate.
-        S
+
                 Returns:
                     str: The evaluation result.
         """
@@ -75,8 +75,8 @@ class BatchModelEvaluator(BaseEvaluator):
 
         if len(evaluation_results) != len(generated_examples):
             warnings.warn(
-                f"Batch result length mismatch: {len(evaluation_results)} != {len(generated_examples)} \
-                          it means that some examples are not evaluated."
+                f"Batch result length mismatch: {len(evaluation_results)} != {len(generated_examples)}"
+                ": it means that some examples are not evaluated."
             )
 
         return evaluation_results

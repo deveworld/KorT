@@ -1,3 +1,38 @@
+"""
+Generation Script for KorT Package
+
+This script provides a command-line interface for generating translations
+using various translation models and services within the KorT framework.
+
+The script handles:
+- Model and translator discovery and instantiation
+- Translation generation across multiple language pairs
+- Support for both API-based and local models
+- Custom prompt templates and configurations
+- Output formatting and saving
+
+Usage:
+    python -m kort.scripts.generate -t TRANSLATOR_TYPE [OPTIONS]
+
+Arguments:
+    -t, --model_type: Type of translator/model to use
+    -n, --model_name: Specific model name (required for model-based translation)
+    --api_key: API key for model access (if required)
+    --output: Path for output translation results (optional)
+    -p, --prompt_type: Custom prompt template to use
+    -d, --device: Device to use for local models (e.g., 'cuda', 'cpu')
+    -s, --stop: Stop sequence for generation
+    -l, --list: List available translators and models
+
+The script automatically processes all evaluation data from EVAL_DATA,
+generating translations for each example and saving results in a structured format.
+
+Example:
+    $ python -m kort.scripts.generate -t papagofree
+    $ python -m kort.scripts.generate -t openai -n gpt-4 --api_key your-key
+    $ python -m kort.scripts.generate -t gugugo -n squarelike/Gugugo-koen-7B-V1.1 -d cuda
+"""
+
 import argparse
 import os
 import time
@@ -105,6 +140,18 @@ if __name__ == "__main__":
     os.makedirs(os.path.dirname(output), exist_ok=True)
 
     def invert_ko_en(code: LangCode) -> LangCode:
+        """
+        Invert Korean-English language codes.
+        
+        Args:
+            code: Language code to invert (KOR or ENG)
+            
+        Returns:
+            Inverted language code
+            
+        Raises:
+            ValueError: If language code is not KOR or ENG
+        """
         if code == LangCode.KOR:
             return LangCode.ENG
         elif code == LangCode.ENG:

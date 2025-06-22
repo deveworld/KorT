@@ -1,3 +1,31 @@
+"""
+Leaderboards Module for KorT Package
+
+This module provides leaderboard generation and visualization capabilities
+for comparing translation model performance across different metrics and categories.
+
+The module includes:
+- Base leaderboard functionality
+- Text-based leaderboard display
+- Web-based interactive leaderboards
+- Model performance summaries
+- Data aggregation and ranking utilities
+
+Classes:
+    BaseLeaderBoard: Abstract base class for leaderboard implementations
+    ModelSummary: Data structure for model performance summaries
+    LeaderBoardText: Command-line text-based leaderboard
+    LeaderboardWeb: Interactive web-based leaderboard
+
+The leaderboards support multiple evaluation categories, custom sorting,
+filtering, and detailed performance breakdowns for comprehensive model comparison.
+
+Example:
+    >>> from kort.leaderboards import LeaderboardWeb
+    >>> leaderboard = LeaderboardWeb('./evaluated')
+    >>> leaderboard.launch()  # Starts web interface
+"""
+
 import sys
 from typing import TYPE_CHECKING
 

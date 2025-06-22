@@ -1,3 +1,35 @@
+"""
+Evaluation Script for KorT Package
+
+This script provides a command-line interface for evaluating translation
+models using the KorT framework. It supports both native evaluators and
+model-based evaluation approaches.
+
+The script handles:
+- Model and evaluator discovery and instantiation
+- Input data validation and processing
+- Evaluation execution with progress tracking
+- Results aggregation and output formatting
+
+Usage: 
+    python -m kort.scripts.evaluate -t MODEL_TYPE [OPTIONS]
+
+Arguments:
+    -t, --model_type: Type of model/evaluator to use
+    -n, --model_name: Specific model name (required for model-based evaluation)
+    --api_key: API key for model access (if required)
+    --input: Path to input JSON file with generated translations
+    --output: Path for output evaluation results (optional)
+    -l, --list: List available models and evaluators
+
+The script automatically detects whether to use a native evaluator or
+model-based evaluation based on the specified model type.
+
+Example:
+    $ python -m kort.scripts.evaluate -t human --input generated.json
+    $ python -m kort.scripts.evaluate -t openai -n gpt-4 --input generated.json
+"""
+
 import argparse
 import json
 import os

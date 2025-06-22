@@ -1,3 +1,35 @@
+"""
+Translators Module for KorT Package
+
+This module provides access to various translation services and APIs
+for Korean-English translation tasks within the KorT package.
+
+The module includes:
+- Translation service discovery and instantiation utilities
+- Support for multiple translation providers (Google, Naver, DeepL, Kakao)
+- Model-based translation using language models
+- Free and paid API integrations
+
+Functions:
+    get_translator: Retrieve translator class by name
+    get_translator_list: Get list of available translators
+
+Classes:
+    BaseTranslator: Abstract base class for all translators
+    ModelTranslator: Translator using language models
+    All specific translator implementations are lazily loaded for performance.
+
+The module supports both free and commercial translation services,
+allowing users to choose the most appropriate option for their needs.
+
+Example:
+    >>> from kort.data import LangCode
+    >>> from kort.translators import get_translator, get_translator_list
+    >>> translators = get_translator_list()
+    >>> papago = get_translator('papagofree')()
+    >>> result = papago.translate('Hello', LangCode.ENG, LangCode.KOR)
+"""
+
 import sys
 from typing import TYPE_CHECKING, Type
 
@@ -9,11 +41,23 @@ def get_translator(translator_name: str) -> Type[BaseTranslator]:
     """
     Get the translator class based on the translator name.
 
+    This function supports both lazy-loaded and regular module loading,
+    providing a unified interface for translator class retrieval.
+
     Args:
         translator_name (str): The name of the translator to retrieve.
+            Should match the translator class name without the 'Translator' suffix.
+            For example, 'papagofree' for 'PapagoFreeTranslator'.
 
     Returns:
-        BaseTranslator: The corresponding translator class.
+        Type[BaseTranslator]: The corresponding translator class.
+
+    Raises:
+        ValueError: If the specified translator is not found.
+
+    Example:
+        >>> translator_class = get_translator('papagofree')
+        >>> translator = translator_class()
     """
     translator_class_name = translator_name + "Translator"
 
@@ -38,8 +82,17 @@ def get_translator_list() -> list[str]:
     """
     Get a list of available translator names.
 
+    This function works with both lazy-loaded and regular modules,
+    collecting translator names from all available sources.
+
     Returns:
-        list[str]: A list of available translator names.
+        list[str]: A list of available translator names (without 'Translator' suffix).
+            Names are returned in lowercase for consistency.
+            Excludes base classes like 'BaseTranslator' and 'ModelTranslator'.
+
+    Example:
+        >>> translators = get_translator_list()
+        >>> print(translators)  # ['papagofree', 'googlefree', 'deeplapi', ...]
     """
     # This version works with _LazyModule by checking module's internal state
     module = sys.modules[__name__]

@@ -1,3 +1,29 @@
+"""
+Evaluators Module for KorT Package
+
+This module provides evaluation frameworks and utilities for assessing
+translation quality and model performance.
+
+The module includes:
+- Base evaluator classes
+- Model-based evaluators
+- Batch evaluation support
+- Human evaluation interfaces
+- Evaluator discovery and instantiation utilities
+
+Functions:
+    get_evaluator: Retrieve evaluator class by name
+    get_evaluator_list: Get list of available evaluators
+
+Classes:
+    All evaluator classes are lazily loaded for performance.
+
+Example:
+    >>> from kort.evaluators import get_evaluator, get_evaluator_list
+    >>> evaluators = get_evaluator_list()
+    >>> human_eval = get_evaluator('human')()
+"""
+
 import sys
 from typing import TYPE_CHECKING, Type
 
@@ -9,11 +35,23 @@ def get_evaluator(evaluator_name: str) -> Type[BaseEvaluator]:
     """
     Get the evaluator class based on the evaluator name.
 
+    This function supports both lazy-loaded and regular module loading,
+    providing a unified interface for evaluator class retrieval.
+
     Args:
         evaluator_name (str): The name of the evaluator to retrieve.
+            Should match the evaluator class name without the 'Evaluator' suffix.
+            For example, 'human' for 'HumanEvaluator'.
 
     Returns:
-        BaseEvaluator: The corresponding evaluator class.
+        Type[BaseEvaluator]: The corresponding evaluator class.
+
+    Raises:
+        ValueError: If the specified evaluator is not found.
+
+    Example:
+        >>> evaluator_class = get_evaluator('human')
+        >>> evaluator = evaluator_class()
     """
     evaluator_class_name = evaluator_name + "Evaluator"
 
@@ -37,8 +75,16 @@ def get_evaluator_list() -> list[str]:
     """
     Get a list of available evaluator names.
 
+    This function works with both lazy-loaded and regular modules,
+    collecting evaluator names from all available sources.
+
     Returns:
-        list[str]: A list of available evaluator names.
+        list[str]: A list of available evaluator names (without 'Evaluator' suffix).
+            Names are returned in lowercase for consistency.
+
+    Example:
+        >>> evaluators = get_evaluator_list()
+        >>> print(evaluators)  # ['human', 'model', ...]
     """
     evaluator_name = []
 

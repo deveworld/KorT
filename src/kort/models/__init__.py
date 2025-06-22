@@ -1,3 +1,33 @@
+"""
+Models Module for KorT Package
+
+This module provides access to various translation and language models
+used for translation generation and evaluation tasks.
+
+The module includes:
+- Model discovery and instantiation utilities
+- Support for multiple model providers (OpenAI, Anthropic, Google, etc.)
+- Batch processing capabilities
+- Custom model implementations
+- Transformer-based models
+
+Functions:
+    get_model: Retrieve model class by type name
+    get_all_model_class_names: Get all available model class names
+    get_model_list: Get list of regular (non-batch) models
+    get_batch_model_list: Get list of batch-capable models
+
+Classes:
+    BaseModel: Abstract base class for all models
+    BatchModel: Base class for batch-capable models
+    All specific model implementations are lazily loaded for performance.
+
+Example:
+    >>> from kort.models import get_model, get_model_list
+    >>> models = get_model_list()
+    >>> openai_model = get_model('openai')('gpt-4', api_key='...')
+"""
+
 import sys
 from typing import TYPE_CHECKING, Type
 
@@ -7,13 +37,25 @@ from .base_model import BaseModel
 
 def get_model(model_type: str) -> Type[BaseModel]:
     """
-    Get the model class based on the model name.
+    Get the model class based on the model type name.
+
+    This function supports both lazy-loaded and regular module loading,
+    providing a unified interface for model class retrieval.
 
     Args:
-        model_name (str): The name of the model to retrieve.
+        model_type (str): The type of the model to retrieve.
+            Should match the model class name without the 'Model' suffix.
+            For example, 'openai' for 'OpenAIModel'.
 
     Returns:
-        BaseModel: The corresponding model class.
+        Type[BaseModel]: The corresponding model class.
+
+    Raises:
+        ValueError: If the specified model type is not found.
+
+    Example:
+        >>> model_class = get_model('openai')
+        >>> model = model_class('gpt-4', api_key='your-key')
     """
     model_class_name = model_type + "Model"
 
@@ -36,10 +78,18 @@ def get_model(model_type: str) -> Type[BaseModel]:
 
 def get_all_model_class_names() -> list[str]:
     """
-    Get a list of all available model names.
+    Get a list of all available model class names.
+
+    This function works with both lazy-loaded and regular modules,
+    collecting model class names from all available sources.
 
     Returns:
-        list[str]: A list of all available model names.
+        list[str]: A list of all available model class names.
+            Excludes base classes like 'BaseModel' and 'BatchModel'.
+
+    Example:
+        >>> class_names = get_all_model_class_names()
+        >>> print(class_names)  # ['OpenAIModel', 'ClaudeModel', ...]
     """
     model_names = []
 
@@ -70,10 +120,17 @@ def get_all_model_class_names() -> list[str]:
 
 def get_model_list() -> list[str]:
     """
-    Get a list of available model names. (excluding batch models)
+    Get a list of available model names (excluding batch models).
+
+    Returns model type names in lowercase, suitable for use with get_model().
 
     Returns:
-        list[str]: A list of available model names.
+        list[str]: A list of available model type names.
+            Names are returned in lowercase without the 'Model' suffix.
+
+    Example:
+        >>> models = get_model_list()
+        >>> print(models)  # ['openai', 'claude', 'gemini', ...]
     """
     return [
         k[:-5].lower()
@@ -86,8 +143,15 @@ def get_batch_model_list() -> list[str]:
     """
     Get a list of available batch model names.
 
+    Returns batch model type names in lowercase, suitable for batch processing.
+
     Returns:
-        list[str]: A list of available batch model names.
+        list[str]: A list of available batch model type names.
+            Names are returned in lowercase without the 'BatchModel' suffix.
+
+    Example:
+        >>> batch_models = get_batch_model_list()
+        >>> print(batch_models)  # ['openai', 'claude', ...]
     """
     return [
         k[:-5].lower() for k in get_all_model_class_names() if k.endswith("BatchModel")

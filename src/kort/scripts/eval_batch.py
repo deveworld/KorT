@@ -1,3 +1,34 @@
+"""
+Batch Evaluation Script for KorT Package
+
+This script provides a command-line interface for batch evaluation of translation
+models using the KorT framework. It supports batch processing for efficient
+evaluation of large datasets using models that support batch inference.
+
+The script handles:
+- Batch job submission and management
+- Status monitoring for long-running batch jobs
+- Result retrieval and processing
+- Output formatting and saving
+
+Usage:
+    python -m kort.scripts.eval_batch -t MODEL_TYPE -n MODEL_NAME --input INPUT_FILE
+    python -m kort.scripts.eval_batch --job_id JOB_ID --input INPUT_FILE
+
+Arguments:
+    -t, --model_type: Type of model to use for evaluation
+    -n, --model_name: Specific model name/version
+    --api_key: API key for model access (if required)
+    --input: Path to input JSON file with generated translations
+    --output: Path for output evaluation results (optional)
+    --job_id: Job ID for retrieving batch results
+    -l, --list: List available batch models
+
+Example:
+    $ python -m kort.scripts.eval_batch -t openai -n gpt-4 --input generated.json
+    $ python -m kort.scripts.eval_batch --job_id batch_123 --input generated.json
+"""
+
 import argparse
 import json
 import os

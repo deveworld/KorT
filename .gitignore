@@ -1,8 +1,9 @@
 __pycache__/
 .ruff_cache/
 build/
+dist/
 .python-version
 
-KorT.egg-info/
+kort_cli.egg-info/
 generated/
 evaluated/

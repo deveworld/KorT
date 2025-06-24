@@ -1,7 +1,7 @@
 # KorT
 Korean Translation Benchmark, LLM-as-a-judge
 
-![KorT Image](kort.png)
+![KorT Image](https://raw.githubusercontent.com/deveworld/KorT/refs/heads/main/kort.png)
 
 ## Abstract
 KorT는 대규모 언어 모델(LLM)을 활용하여 번역 품질을 정량적으로 평가하는 벤치마크입니다.
@@ -25,11 +25,32 @@ KorT의 핵심 목표는 기존 자동 평가 지표보다 인간의 판단과 �
 
 ### Install
 KorT 설치하기
+
+### From Pypi
+```
+pip install -U kort-cli[all]
+```
+로컬 모델을 위해 Transformers, Torch가 설치됩니다. 이를 원치 않다면 `[all]`을 빼고 설치해주세요.
+```
+pip install -U kort-cli
+```
+
+#### From Source
+직접 설치할 수도 있습니다!
 ```
 git clone https://github.com/deveworld/kort
 cd kort
+pip install .[all]
+```
+
+마찬가지로 Transformers, Torch가 설치되는 것을 원치 않으시다면 `[all]`을 빼고 설치해주세요.
+```
 pip install .
 ```
+
+#### With uvx
+직접적으로 설치하지 않고도 사용 가능합니다!
+
 
 ### Generate
 사용 가능한 번역기 목록 확인

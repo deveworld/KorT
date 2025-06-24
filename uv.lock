@@ -18,7 +18,6 @@ dependencies = [
     { name = "psutil" },
     { name = "pyyaml" },
     { name = "safetensors" },
-    { name = "torch" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/84/bd/dedb0d8c5855120367e2d9f3c00504be4ee88df50e902e1039d85dbf714f/accelerate-1.8.0.tar.gz", hash = "sha256:8b56553d570f4787fd34a33dc4613f5444fe1ba3d0e81fedb9ce27bd81e91423", size = 381205 }
 wheels = [

@@ -25,13 +25,13 @@ class BatchModelEvaluator(BaseEvaluator):
 
     def batch_evaluate(self, generated_examples: list[GenerationExample]) -> str:
         """
-                Evaluate the generated examples in batch.
+        Evaluate the generated examples in batch.
 
-                Args:
-                    generated_examples (list[GenerationExample]): The list of generated examples to evaluate.
+        Args:
+            generated_examples (list[GenerationExample]): The list of generated examples to evaluate.
 
-                Returns:
-                    str: The evaluation result.
+        Returns:
+            str: The evaluation result.
         """
         prompts = {}
         for generated in generated_examples:

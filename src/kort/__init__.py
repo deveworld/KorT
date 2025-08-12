@@ -14,7 +14,7 @@ The package includes:
 
 Example:
     Basic usage of the package:
-    
+
     >>> from kort.models import get_model
     >>> from kort.translators import get_translator
     >>> model = get_model('openai')('gpt-4')

@@ -142,13 +142,13 @@ if __name__ == "__main__":
     def invert_ko_en(code: LangCode) -> LangCode:
         """
         Invert Korean-English language codes.
-        
+
         Args:
             code: Language code to invert (KOR or ENG)
-            
+
         Returns:
             Inverted language code
-            
+
         Raises:
             ValueError: If language code is not KOR or ENG
         """

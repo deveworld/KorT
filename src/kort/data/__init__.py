@@ -14,7 +14,7 @@ The module includes:
 
 Classes:
     BatchStatus: Enum for batch processing status tracking
-    
+
 Data:
     All data models and utilities are lazily loaded for performance.
 
@@ -32,10 +32,10 @@ from typing import TYPE_CHECKING
 class BatchStatus(Enum):
     """
     Enum for batch status.
-    
+
     Used to track the status of batch processing jobs across different
     model providers and evaluation systems.
-    
+
     Attributes:
         IN_PROGRESS: Job is currently being processed
         COMPLETED: Job has finished successfully

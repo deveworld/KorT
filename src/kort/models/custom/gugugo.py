@@ -1,4 +1,8 @@
-import torch
+"""Gugugo model implementation for Korean-English translation."""
+
+import importlib
+from typing import Any
+
 from transformers.generation.stopping_criteria import (
     StoppingCriteria,
     StoppingCriteriaList,
@@ -7,26 +11,39 @@ from transformers.generation.stopping_criteria import (
 from ..transformer_model import TransformersModel
 
 
+def _import_torch():
+    """Import torch module dynamically."""
+    return importlib.import_module("torch")
+
+
 class StoppingCriteriaSub(StoppingCriteria):
-    def __init__(self, stops=[], encounters=1):
+    """Custom stopping criteria for Gugugo model."""
+
+    def __init__(self, stops=None, encounters=1):
         super().__init__()
-        self.stops = [stop for stop in stops]
+        self.stops = stops if stops is not None else []
 
     def __call__(
-        self, input_ids: torch.LongTensor, scores: torch.FloatTensor, **kwargs
-    ) -> torch.BoolTensor:
+        self,
+        input_ids: Any,  # torch.LongTensor
+        scores: Any,  # torch.FloatTensor
+        **kwargs,
+    ) -> Any:  # torch.BoolTensor
+        torch = _import_torch()
         for stop in self.stops:
             if input_ids.shape[1] >= len(stop) and torch.all(
                 (stop == input_ids[0][-len(stop) :])
             ):
-                return torch.BoolTensor([True], device=input_ids.device)
+                return torch.tensor([True], dtype=torch.bool, device=input_ids.device)
 
-        return torch.BoolTensor([False], device=input_ids.device)
+        return torch.tensor([False], dtype=torch.bool, device=input_ids.device)
 
 
 class GugugoModel(TransformersModel):
     """
     Model class for the Gugugo model.
+
+    This model requires torch and transformers to be installed.
     """
 
     _need_api_key = False
@@ -39,6 +56,7 @@ class GugugoModel(TransformersModel):
         super().__init__(model_name, evaluation=False, *args, **kwargs)
 
     def inference(self, input: str) -> str:
+        torch = _import_torch()
         stop_words_ids = torch.tensor(
             [
                 [829, 45107, 29958],

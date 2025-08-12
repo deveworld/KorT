@@ -18,7 +18,7 @@ class PapagoFreeTranslator(BaseTranslator):
     def __init__(self):
         super().__init__(self.translator_name)
         self.url = "https://papago.naver.com/apis/n2mt/translate"
-        self.key = "v1.8.12_7cf22c1499" # hardcoded-key TODO: Get the key dynamically if possible
+        self.key = "v1.8.12_7cf22c1499"  # hardcoded-key TODO: Get the key dynamically if possible
         self.device_id = ""
         self.timestamp = ""
         self.authorization = ""

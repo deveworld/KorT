@@ -80,6 +80,9 @@ class BaseLeaderBoard:
                 print(f"Error loading file {file}: {e}")
                 continue
 
+        if not self.data:
+            return
+
         common_categories = self.data[0].category_scores.keys()
         for model in self.data:
             self.leaderboard_data.append(

@@ -10,15 +10,15 @@ class LangCode(Enum):
     JPN = "ja"  # Japanese
     KOR = "ko"  # Korean
 
-    def to_iso639_3(self):
+    def to_iso639_3(self) -> str:
         """Convert the language code to ISO 639-3 format."""
-        return self.name.lower()
+        return str(self.name).lower()
 
-    def to_iso639_2(self):
+    def to_iso639_2(self) -> str:
         """Convert the language code to ISO 639-2 format."""
         return str(self.value).lower()
 
-    def to_korean(self):
+    def to_korean(self) -> str:
         """Convert the language code to Korean."""
         return {
             LangCode.ENG: "영어",
@@ -28,7 +28,7 @@ class LangCode(Enum):
             LangCode.KOR: "한국어",
         }[self]
 
-    def to_english(self):
+    def to_english(self) -> str:
         """Convert the language code to English."""
         return {
             LangCode.ENG: "English",

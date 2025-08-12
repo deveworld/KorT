@@ -36,7 +36,7 @@ class ClaudeModel(BaseModel):
             )
             if result.content[-1].type != "text":
                 raise ValueError(f"Unexpected content type: {result.content[-1].type}")
-            output = result.content[-1].text
+            output = getattr(result.content[-1], "text", "")
         except Exception as e:
             print(e)
             if self.error_retry():

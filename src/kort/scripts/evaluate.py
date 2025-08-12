@@ -11,7 +11,7 @@ The script handles:
 - Evaluation execution with progress tracking
 - Results aggregation and output formatting
 
-Usage: 
+Usage:
     python -m kort.scripts.evaluate -t MODEL_TYPE [OPTIONS]
 
 Arguments:

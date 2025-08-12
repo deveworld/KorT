@@ -30,14 +30,14 @@ class LeaderboardWeb(BaseLeaderBoard):
         """
         updated_data = self.leaderboard_data.copy()
 
-        if search_term and "Model Name" in updated_data[0]:
+        if search_term and updated_data and "Model Name" in updated_data[0]:
             updated_data = [
                 item
                 for item in updated_data
                 if search_term.lower() in str(item["Model Name"]).lower()
             ]
 
-        if sort_by and sort_by in updated_data[0]:
+        if sort_by and updated_data and sort_by in updated_data[0]:
             updated_data.sort(key=lambda x: x[sort_by], reverse=True)
 
         return updated_data

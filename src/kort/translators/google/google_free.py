@@ -31,7 +31,9 @@ class GoogleFreeTranslator(BaseTranslator):
 
         async def async_translate():
             return await self.translator.translate(
-                text, src=source_lang.to_iso639_2(), dest=target_lang.to_iso639_2()
+                text,
+                src=source_lang.to_iso639_2(),
+                dest=target_lang.to_iso639_2(),
             )
 
         try:
